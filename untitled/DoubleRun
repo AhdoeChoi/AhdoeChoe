@@ -1,0 +1,90 @@
+import random
+from pico2d import *
+
+# Game object class here
+# 잔디객체
+class Grass:
+    def __init__(self):
+        self.image = load_image('grass.png')
+
+    def draw(self):
+        self.image.draw(400,30)
+        self.image.draw(400,330)
+
+class BackGround:
+    def __init__(self):
+        self.image = load_image('BackGround1.png')
+        self.x = 0
+        self.y = 0
+    def draw(self):
+        self.image.draw(400-self.x,300)
+    def update(self):
+        self.x+=0.5
+
+ #Charecter 객체
+class Rupy:
+   def __init__(self):
+        self.x = 60
+        self.y = 130
+        self.frame = 0
+        self.image = load_image('rupy_run.png')
+        self.state = 0 # 0은 달리기 1은 점프
+   def update(self):
+        self.frame = (self.frame+1) % 6
+
+   def draw(self):
+        self.image.clip_draw(self.frame*150, 0, 120, 150, self.x, self.y)
+class Joro:
+    def __init__(self):
+        self.x = 60
+        self.y = 430
+        self.frame = 0
+        self.image = load_image('joro_run.png')
+        self.state = 0 # 0은 달리기 1은 점프
+    def update(self):
+        self.frame = (self.frame + 1) % 6
+
+    def draw(self):
+        self.image.clip_draw(self.frame * 160, 0, 160, 150, self.x, self.y)
+
+#이벤트 처리
+def handle_events():
+    global running
+    events = get_events()
+    for event in events:
+        if event.type == SDL_QUIT:
+            running = False
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+            running = False
+
+# initialization code
+open_canvas()
+
+rupy = Rupy()
+joro = Joro()
+grass = Grass()
+background = BackGround()
+running = True
+
+# game main loop code
+
+while running:
+    handle_events() #이벤트 받고
+
+    background.update()
+    rupy.update() #루피 재갱신하고
+    joro.update()
+
+    clear_canvas() #화면 재갱신
+    background.draw()
+    grass.draw() #잔디 다시그리고
+
+    rupy.draw() #루피 다시그린다
+    joro.draw()
+
+    update_canvas()
+
+    delay(0.05)
+
+# finalization code
+close_canvas()
