@@ -27,25 +27,37 @@ class Rupy:
         self.x = 60
         self.y = 130
         self.frame = 0
-        self.image = load_image('rupy_run.png')
+        self.runimage = load_image('rupy_run.png')
+        self.jumpimage = load_image('rupy_jump.png')
+
         self.state = 0 # 0은 달리기 1은 점프
+        self.jumpstate = 0 #0이면 up 1이면 down
    def update(self):
         self.frame = (self.frame+1) % 6
 
-   def draw(self):
-        self.image.clip_draw(self.frame*150, 0, 120, 150, self.x, self.y)
+   def drawrun(self):
+        self.runimage.clip_draw(self.frame*150, 0, 120, 150, self.x, self.y)
+
+   def drawjump(self):
+       self.jumpimage.clip_draw(self.frame * 126, 0, 120, 200, self.x, self.y)
+
 class Joro:
     def __init__(self):
         self.x = 60
         self.y = 430
         self.frame = 0
-        self.image = load_image('joro_run.png')
+        self.runimage = load_image('joro_run.png')
+        self.jumpimage = load_image('joro_jump.png')
+
         self.state = 0 # 0은 달리기 1은 점프
+        self.jumpstate = 0
     def update(self):
         self.frame = (self.frame + 1) % 6
 
-    def draw(self):
-        self.image.clip_draw(self.frame * 160, 0, 160, 150, self.x, self.y)
+    def drawrun(self):
+        self.runimage.clip_draw(self.frame * 160, 0, 160, 150, self.x, self.y)
+    def drawjump(self):
+        self.jumpimage.clip_draw(self.frame * 175, 0, 150, 200, self.x, self.y)
 
 #이벤트 처리
 def handle_events():
@@ -56,6 +68,10 @@ def handle_events():
             running = False
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_UP:
+            rupy.state = 1
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_w:
+            joro.state = 1
 
 # initialization code
 open_canvas()
@@ -79,9 +95,36 @@ while running:
     background.draw()
     grass.draw() #잔디 다시그리고
 
-    rupy.draw() #루피 다시그린다
-    joro.draw()
+    #루피 처리
+    if(rupy.state == 0):
+        rupy.drawrun() #루피 다시그린다
+    elif(rupy.state == 1):
+        if(rupy.jumpstate == 0): #올라가고
+            rupy.y += 15
+        if(rupy.y > 200):
+            rupy.jumpstate = 1
+        if(rupy.jumpstate == 1):#내려가야함
+            rupy.y -= 15
+        if(rupy.y <= 130):
+            rupy.jumpstate = 0
+            rupy.state = 0
+        rupy.drawjump()
 
+    #조로 처리
+    if (joro.state == 0):
+        joro.drawrun()  # 루피 다시그린다
+    elif (joro.state == 1):
+        joro.drawjump()
+        if (joro.jumpstate == 0):  # 올라가고
+            joro.y += 15
+        if (joro.y > 500):
+            joro.jumpstate = 1
+        if (joro.jumpstate == 1):  # 내려가야함
+            joro.y -= 15
+        if (joro.y <= 430):
+            joro.jumpstate = 0
+            joro.state = 0
+            joro.drawjump()
     update_canvas()
 
     delay(0.05)
