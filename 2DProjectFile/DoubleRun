@@ -19,7 +19,7 @@ class BackGround:
     def draw(self):
         self.image.draw(400-self.x,300)
     def update(self):
-        self.x+=0.5
+        self.x += 0.5
 
  #Charecter 객체
 class Rupy:
@@ -39,7 +39,7 @@ class Rupy:
         self.runimage.clip_draw(self.frame*150, 0, 120, 150, self.x, self.y)
 
    def drawjump(self):
-       self.jumpimage.clip_draw(self.frame * 126, 0, 120, 200, self.x, self.y)
+       self.jumpimage.clip_draw(self.frame * 125, 0, 120, 200, self.x, self.y)
 
 class Joro:
     def __init__(self):
@@ -100,11 +100,11 @@ while running:
         rupy.drawrun() #루피 다시그린다
     elif(rupy.state == 1):
         if(rupy.jumpstate == 0): #올라가고
-            rupy.y += 15
-        if(rupy.y > 200):
+            rupy.y += 25
+        if(rupy.y > 230):
             rupy.jumpstate = 1
         if(rupy.jumpstate == 1):#내려가야함
-            rupy.y -= 15
+            rupy.y -= 25
         if(rupy.y <= 130):
             rupy.jumpstate = 0
             rupy.state = 0
@@ -116,11 +116,11 @@ while running:
     elif (joro.state == 1):
         joro.drawjump()
         if (joro.jumpstate == 0):  # 올라가고
-            joro.y += 15
-        if (joro.y > 500):
+            joro.y += 25
+        if (joro.y > 530):
             joro.jumpstate = 1
         if (joro.jumpstate == 1):  # 내려가야함
-            joro.y -= 15
+            joro.y -= 25
         if (joro.y <= 430):
             joro.jumpstate = 0
             joro.state = 0
