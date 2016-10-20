@@ -19,12 +19,12 @@ Background = None
 class CoinDown:
     image = None
     def __init__(self):
-        self.x = random.randint(100, 700)
+        self.x = 50*random.randint(1,30)
         self.y = 130
         if CoinDown.image == None:
             CoinDown.image   = load_image('coin.png')
     def update(self):
-        self.x -= 5
+        self.x -= 10
     def draw(self):
         self.image.draw(self.x, self.y)
 
@@ -32,14 +32,39 @@ class CoinDown:
 class CoinUp:
     image = None
     def __init__(self):
-        self.x = random.randint(100, 700)
+        self.x = 50*random.randint(1,30)
         self.y = 430
         if CoinUp.image == None:
             CoinUp.image   = load_image('coin.png')
     def update(self):
-        self.x -= 5
+        self.x -= 10
     def draw(self):
         self.image.draw(self.x, self.y)
+
+class ObstacleDown:
+    image = None
+    def __init__(self):
+        self.x = 150 *random.randint(1,20)
+        self.y = 180
+        if ObstacleDown.image == None:
+            ObstacleDown.image   = load_image('obstacle.png')
+    def draw(self):
+        self.image.draw(self.x,self.y - 90)
+    def update(self):
+        self.x -= 10
+
+
+class ObstacleUp:
+    image = None
+    def __init__(self):
+        self.x = 150 * random.randint(1,20)
+        self.y = 480
+        if ObstacleUp.image == None:
+            ObstacleUp.image   = load_image('obstacle.png')
+    def draw(self):
+        self.image.draw(self.x,self.y - 90)
+    def update(self):
+        self.x -= 10
 
 
 class Grass:
@@ -50,7 +75,7 @@ class Grass:
         self.image.draw(400-self.x,30)
         self.image.draw(400-self.x,330)
     def update(self):
-        self.x+=3;
+        self.x += 10;
 
 class BackGround:
     def __init__(self):
@@ -60,7 +85,7 @@ class BackGround:
     def draw(self):
         self.image.draw(400-self.x,300)
     def update(self):
-        self.x += 0.5
+        self.x += 1
 
  #Charecter 객체
 class Rupy:
@@ -71,10 +96,12 @@ class Rupy:
         self.runimage = load_image('rupy_run.png')
         self.jumpimage = load_image('rupy_jump.png')
         self.attackimage = load_image('rupy_attack.png')
+        self.crushimage = load_image('rupy_crush.png')
 
         self.state = 0 # 0은 달리기 1은 점프
         self.jumpstate = 0 #0이면 up 1이면 down
         self.attackstate = 0
+        self.crushstate = 0
    def update(self):
         self.frame = (self.frame+1) % 6
    def drawrun(self):
@@ -83,6 +110,8 @@ class Rupy:
        self.jumpimage.clip_draw(self.frame * 125, 0, 120, 200, self.x, self.y)
    def drawattack(self):
        self.attackimage.clip_draw(self.frame * 153,5,155,170,self.x,self.y+10)
+   def drawcrush(self):
+       self.crushimage.clip_draw(self.frame*130,120,150,self.x,self.y)
 
 class Joro:
     def __init__(self):
@@ -110,13 +139,15 @@ class Joro:
 
 
 def enter():
-    global rupy, joro,background,grass,coinsdown,coinsup
+    global rupy, joro,background,grass,coinsdown,coinsup,obstaclesdown,obstaclesup
     rupy = Rupy()
     joro = Joro()
     background = BackGround()
     grass = Grass()
-    coinsdown = [CoinDown() for i in range(10)]
-    coinsup = [CoinUp() for i in range(10)]
+    coinsdown = [CoinDown() for i in range(30)]
+    coinsup = [CoinUp() for i in range(30)]
+    obstaclesdown = [ObstacleDown() for i in range(3)]
+    obstaclesup = [ObstacleUp() for i in range(4)]
 
     #pass
 
@@ -129,6 +160,7 @@ def exit():
     del(grass)
     del(coinsdown)
     del(coinsup)
+    del(obstaclesdown)
     #pass
 
 
@@ -174,6 +206,11 @@ def update():
         coindown.update()
     for coinup in coinsup:
         coinup.update()
+    for obstacledown in obstaclesdown:
+        obstacledown.update()
+    for obstacleup in obstaclesup:
+        obstacleup.update()
+
     #pass
 
 
@@ -205,7 +242,16 @@ def draw():
         else:
             rupy.attackstate += 0.1
         rupy.drawattack()
+    if(rupy.state == -1):
+        if(rupy.crushstate > 1):
+            rupy.state = 0
+            rupy.crushstate = 0
+        else:
+            rupy.crushstate += 0.1
+        rupy.drawcrush()
     #여기까지 루피 그린거
+
+
 
     #조로 그리기
     if (joro.state == 0):
@@ -229,14 +275,21 @@ def draw():
             joro.attackstate += 0.1
         joro.drawattack()
 
-    #코인 클래스처리
+    #코인 클래스그리기기
     for coindown in coinsdown:
-        if(coindown.x > rupy.x + 10):
+        if(coindown.x > rupy.x + 50):
             coindown.draw()
 
     for coinup in coinsup:
-        if(coinup.x > joro. x +10):
+        if(coinup.x > joro. x +50):
             coinup.draw()
+
+     #장애물 클래스 그리기
+    for obstacledown in obstaclesdown:
+        obstacledown.draw()
+
+    for obstacleup in obstaclesup:
+        obstacleup.draw()
     update_canvas()
 
     delay(0.05)
