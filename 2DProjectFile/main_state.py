@@ -44,7 +44,7 @@ class CoinUp:
 class ObstacleDown:
     image = None
     def __init__(self):
-        self.x = 150 *random.randint(1,20)
+        self.x = 100 *random.randint(1,15)
         self.y = 180
         if ObstacleDown.image == None:
             ObstacleDown.image   = load_image('obstacle.png')
@@ -54,10 +54,11 @@ class ObstacleDown:
         self.x -= 10
 
 
+
 class ObstacleUp:
     image = None
     def __init__(self):
-        self.x = 150 * random.randint(1,20)
+        self.x = 100 * random.randint(1,15)
         self.y = 480
         if ObstacleUp.image == None:
             ObstacleUp.image   = load_image('obstacle.png')
@@ -72,10 +73,11 @@ class Grass:
         self.x = 0
         self.image = load_image('grass.png')
     def draw(self):
-        self.image.draw(400-self.x,30)
-        self.image.draw(400-self.x,330)
+        self.image.draw(1400-self.x,30)
+        self.image.draw(1400-self.x,330)
     def update(self):
         self.x += 10;
+
 
 class BackGround:
     def __init__(self):
@@ -97,13 +99,18 @@ class Rupy:
         self.jumpimage = load_image('rupy_jump.png')
         self.attackimage = load_image('rupy_attack.png')
         self.crushimage = load_image('rupy_crush.png')
+        self.i = 0
 
         self.state = 0 # 0은 달리기 1은 점프
         self.jumpstate = 0 #0이면 up 1이면 down
         self.attackstate = 0
         self.crushstate = 0
    def update(self):
-        self.frame = (self.frame+1) % 6
+       if(self.state == 1 or 2):
+            self.frame = (self.frame+1) % 6
+       elif(self.state == -1):
+            self.frame = (self.frame+1) % 4
+
    def drawrun(self):
         self.runimage.clip_draw(self.frame*150, 0, 120, 150, self.x, self.y)
    def drawjump(self):
@@ -111,7 +118,7 @@ class Rupy:
    def drawattack(self):
        self.attackimage.clip_draw(self.frame * 153,5,155,170,self.x,self.y+10)
    def drawcrush(self):
-       self.crushimage.clip_draw(self.frame*130,120,150,self.x,self.y)
+       self.crushimage.clip_draw(self.frame*125,0,125,150,self.x,self.y)
 
 class Joro:
     def __init__(self):
@@ -147,7 +154,7 @@ def enter():
     coinsdown = [CoinDown() for i in range(30)]
     coinsup = [CoinUp() for i in range(30)]
     obstaclesdown = [ObstacleDown() for i in range(3)]
-    obstaclesup = [ObstacleUp() for i in range(4)]
+    obstaclesup = [ObstacleUp() for i in range(3)]
 
     #pass
 
@@ -211,6 +218,10 @@ def update():
     for obstacleup in obstaclesup:
         obstacleup.update()
 
+
+
+
+
     #pass
 
 
@@ -242,6 +253,7 @@ def draw():
         else:
             rupy.attackstate += 0.1
         rupy.drawattack()
+
     if(rupy.state == -1):
         if(rupy.crushstate > 1):
             rupy.state = 0
