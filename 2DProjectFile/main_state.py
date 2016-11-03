@@ -17,31 +17,53 @@ joro = None
 Background = None
 
 class CoinDown:
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 20.0  # Km/Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
     image = None
     def __init__(self):
         self.x = 50*random.randint(1,30)
         self.y = 130
         if CoinDown.image == None:
             CoinDown.image   = load_image('coin.png')
-    def update(self):
-        self.x -= 10
+
+    def update(self,frame_time):
+
+        distance = CoinDown.RUN_SPEED_PPS * frame_time
+        self.x -=  distance
+
     def draw(self):
         self.image.draw(self.x, self.y)
 
 
 class CoinUp:
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 20.0  # Km/Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
     image = None
     def __init__(self):
         self.x = 50*random.randint(1,30)
         self.y = 430
         if CoinUp.image == None:
             CoinUp.image   = load_image('coin.png')
-    def update(self):
-        self.x -= 10
+    def update(self,frame_time):
+        distance = CoinUp.RUN_SPEED_PPS * frame_time
+        self.x -= distance
     def draw(self):
         self.image.draw(self.x, self.y)
 
 class ObstacleDown:
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 20.0  # Km/Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
     image = None
     def __init__(self):
         self.x = 100 *random.randint(1,15)
@@ -50,12 +72,18 @@ class ObstacleDown:
             ObstacleDown.image   = load_image('obstacle.png')
     def draw(self):
         self.image.draw(self.x,self.y - 90)
-    def update(self):
-        self.x -= 10
+    def update(self,frame_time):
+        distance = ObstacleDown.RUN_SPEED_PPS * frame_time
+        self.x -= distance
 
 
 
 class ObstacleUp:
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 20.0  # Km/Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
     image = None
     def __init__(self):
         self.x = 100 * random.randint(1,15)
@@ -64,30 +92,44 @@ class ObstacleUp:
             ObstacleUp.image   = load_image('obstacle.png')
     def draw(self):
         self.image.draw(self.x,self.y - 90)
-    def update(self):
-        self.x -= 10
+    def update(self,frame_time):
+        distance = ObstacleUp.RUN_SPEED_PPS * frame_time
+        self.x -= distance
 
 
 class Grass:
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 20.0  # Km/Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
     def __init__(self):
         self.x = 0
         self.image = load_image('grass.png')
     def draw(self):
         self.image.draw(1400-self.x,30)
         self.image.draw(1400-self.x,330)
-    def update(self):
-        self.x += 10;
+    def update(self,frame_time):
+        distance = Grass.RUN_SPEED_PPS * frame_time
+        self.x += distance
 
 
 class BackGround:
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 1.0  # Km/Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
     def __init__(self):
         self.image = load_image('BackGround1.png')
         self.x = 0
         self.y = 0
     def draw(self):
         self.image.draw(400-self.x,300)
-    def update(self):
-        self.x += 1
+    def update(self,frame_time):
+        distance = BackGround.RUN_SPEED_PPS * frame_time
+        self.x += distance
 
  #Charecter 객체
 class Rupy:
@@ -142,7 +184,15 @@ class Joro:
         self.attackimage.clip_draw(self.frame * 188, 0, 180, 200, self.x+10, self.y+15)
 
 
+current_time = 0.0
 
+def get_frame_time():
+
+    global current_time
+
+    frame_time = get_time() - current_time
+    current_time += frame_time
+    return frame_time
 
 
 def enter():
@@ -178,7 +228,6 @@ def pause():
 def resume():
     pass
 
-
 def handle_events():
     events = get_events()
     for event in events:
@@ -205,18 +254,20 @@ def handle_events():
 
 
 def update():
+    frame_time = get_frame_time()
+
     rupy.update()
     joro.update()
-    background.update()
-    grass.update()
+    background.update(frame_time)
+    grass.update(frame_time)
     for coindown in coinsdown:
-        coindown.update()
+        coindown.update(frame_time)
     for coinup in coinsup:
-        coinup.update()
+        coinup.update(frame_time)
     for obstacledown in obstaclesdown:
-        obstacledown.update()
+        obstacledown.update(frame_time)
     for obstacleup in obstaclesup:
-        obstacleup.update()
+        obstacleup.update(frame_time)
 
 
 
