@@ -133,6 +133,7 @@ class BackGround:
 
  #Charecter 객체
 class Rupy:
+
    def __init__(self):
         self.x = 80
         self.y = 130
@@ -148,10 +149,21 @@ class Rupy:
         self.attackstate = 0
         self.crushstate = 0
    def update(self):
-       if(self.state == 1 or 2):
+       if(self.state == 0 ):
             self.frame = (self.frame+1) % 6
        elif(self.state == -1):
             self.frame = (self.frame+1) % 4
+       elif (self.state == 1):
+           self.frame = (self.frame + 1) % 4
+           if (self.jumpstate == 0):  # 올라가고
+               self.y += 25
+           if (self.y > 230):
+               self.jumpstate = 1
+           if (self.jumpstate == 1):  # 내려가야함
+               self.y -= 25
+           if (self.y <= 130):
+               self.jumpstate = 0
+               self.state = 0
 
    def drawrun(self):
         self.runimage.clip_draw(self.frame*150, 0, 120, 150, self.x, self.y)
@@ -175,7 +187,22 @@ class Joro:
         self.jumpstate = 0
         self.attackstate = 0
     def update(self):
-        self.frame = (self.frame + 1) % 6
+        if (self.state == 0):
+            self.frame = (self.frame + 1) % 6
+        elif (self.state == -1):
+            self.frame = (self.frame + 1) % 4
+        elif (self.state == 1):
+            self.frame = (self.frame + 1) % 4
+            if (self.jumpstate == 0):  # 올라가고
+                self.y += 25
+            if (self.y > 530):
+                self.jumpstate = 1
+            if (self.jumpstate == 1):  # 내려가야함
+                self.y -= 25
+            if (self.y <= 430):
+                self.jumpstate = 0
+                self.state = 0
+
     def drawrun(self):
         self.runimage.clip_draw(self.frame * 160, 0, 160, 150, self.x, self.y)
     def drawjump(self):
@@ -286,15 +313,6 @@ def draw():
     if(rupy.state == 0):
         rupy.drawrun()
     if(rupy.state == 1):
-        if (rupy.jumpstate == 0):  # 올라가고
-            rupy.y += 25
-        if (rupy.y > 230):
-            rupy.jumpstate = 1
-        if (rupy.jumpstate == 1):  # 내려가야함
-            rupy.y -= 25
-        if (rupy.y <= 130):
-            rupy.jumpstate = 0
-            rupy.state = 0
         rupy.drawjump()
 
     if(rupy.state == 2):
@@ -320,15 +338,6 @@ def draw():
     if (joro.state == 0):
         joro.drawrun()  # 루피 다시그린다
     elif (joro.state == 1):
-        if (joro.jumpstate == 0):  # 올라가고
-            joro.y += 25
-        if (joro.y > 530):
-            joro.jumpstate = 1
-        if (joro.jumpstate == 1):  # 내려가야함
-            joro.y -= 25
-        if (joro.y <= 430):
-            joro.jumpstate = 0
-            joro.state = 0
         joro.drawjump()
     if (joro.state == 2):
         if (joro.attackstate > 1):

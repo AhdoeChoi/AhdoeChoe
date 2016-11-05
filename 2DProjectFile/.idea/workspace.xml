@@ -43,16 +43,21 @@
       <file leaf-file-name="main_state.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main_state.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="119" column="22" selection-start-line="119" selection-start-column="22" selection-end-line="119" selection-end-column="22" />
+            <state relative-caret-position="100">
+              <caret line="339" column="27" selection-start-line="339" selection-start-column="27" selection-end-line="339" selection-end-column="27" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#3857#4891#0" expanded="false" />
-                <element signature="e#4909#5632#0" expanded="false" />
-                <element signature="e#6210#6388#0" expanded="false" />
-                <element signature="e#7709#9561#0" expanded="false" />
+                <element signature="e#3886#4316#0" expanded="false" />
+                <element signature="e#7096#7274#0" expanded="false" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rupy_jump.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rupy_jump.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -87,9 +92,11 @@
       <file leaf-file-name="DoubleRun" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DoubleRun">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2375">
-              <caret line="126" column="11" selection-start-line="126" selection-start-column="11" selection-end-line="126" selection-end-column="11" />
-              <folding />
+            <state relative-caret-position="0">
+              <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+              <folding>
+                <element signature="e#1055#1581#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -107,9 +114,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="C:/2DGP-2/2016-2DGP/Labs/Lab03/character_runs_esc.py" />
-        <option value="$PROJECT_DIR$/DoubleRun" />
         <option value="$PROJECT_DIR$/game_framework.py" />
         <option value="$PROJECT_DIR$/title_state.py" />
+        <option value="$PROJECT_DIR$/DoubleRun" />
         <option value="$PROJECT_DIR$/main_state.py" />
       </list>
     </option>
@@ -145,8 +152,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -167,6 +172,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -432,7 +439,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -487,12 +494,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main_state.py</url>
-          <line>164</line>
+          <line>176</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main_state.py</url>
-          <line>278</line>
+          <line>305</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
@@ -536,7 +543,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#1055#1581#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -578,7 +587,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#1055#1581#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -638,11 +649,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rupy.png" />
-    <entry file="file://$PROJECT_DIR$/rupy_jump.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://C:/2DGP-2/2016-2DGP/Labs/Lab05/boy_grass_object_main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
@@ -739,14 +745,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DoubleRun">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2375">
-          <caret line="126" column="11" selection-start-line="126" selection-start-column="11" selection-end-line="126" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rupy_crush.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -758,14 +756,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mygame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game_framework.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1653">
@@ -774,16 +764,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/rupy_jump.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DoubleRun">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+          <folding>
+            <element signature="e#1055#1581#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mygame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main_state.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="119" column="22" selection-start-line="119" selection-start-column="22" selection-end-line="119" selection-end-column="22" />
+        <state relative-caret-position="100">
+          <caret line="339" column="27" selection-start-line="339" selection-start-column="27" selection-end-line="339" selection-end-column="27" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#3857#4891#0" expanded="false" />
-            <element signature="e#4909#5632#0" expanded="false" />
-            <element signature="e#6210#6388#0" expanded="false" />
-            <element signature="e#7709#9561#0" expanded="false" />
+            <element signature="e#3886#4316#0" expanded="false" />
+            <element signature="e#7096#7274#0" expanded="false" />
           </folding>
         </state>
       </provider>
