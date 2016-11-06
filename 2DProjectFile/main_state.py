@@ -134,7 +134,13 @@ class BackGround:
  #Charecter 객체
 class Rupy:
 
-   def __init__(self):
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 30.0  # Km/Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+    def __init__(self):
         self.x = 80
         self.y = 130
         self.frame = 0
@@ -148,7 +154,8 @@ class Rupy:
         self.jumpstate = 0 #0이면 up 1이면 down
         self.attackstate = 0
         self.crushstate = 0
-   def update(self):
+    def update(self,frame_time):
+       distance = Rupy.RUN_SPEED_PPS * frame_time
        if(self.state == 0 ):
             self.frame = (self.frame+1) % 6
        elif(self.state == -1):
@@ -156,25 +163,34 @@ class Rupy:
        elif (self.state == 1):
            self.frame = (self.frame + 1) % 4
            if (self.jumpstate == 0):  # 올라가고
-               self.y += 25
+               self.y += distance
            if (self.y > 230):
                self.jumpstate = 1
            if (self.jumpstate == 1):  # 내려가야함
-               self.y -= 25
+               self.y -= distance
            if (self.y <= 130):
                self.jumpstate = 0
                self.state = 0
+       elif (self.state == 2):
+           self.frame = (self.frame + 1) % 6
 
-   def drawrun(self):
+    def drawrun(self):
         self.runimage.clip_draw(self.frame*150, 0, 120, 150, self.x, self.y)
-   def drawjump(self):
+    def drawjump(self):
        self.jumpimage.clip_draw(self.frame * 125, 0, 120, 200, self.x, self.y)
-   def drawattack(self):
+    def drawattack(self):
        self.attackimage.clip_draw(self.frame * 153,5,155,170,self.x,self.y+10)
-   def drawcrush(self):
+    def drawcrush(self):
        self.crushimage.clip_draw(self.frame*125,0,125,150,self.x,self.y)
 
 class Joro:
+
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 30.0  # Km/Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
     def __init__(self):
         self.x = 80
         self.y = 430
@@ -186,7 +202,8 @@ class Joro:
         self.state = 0 # 0은 달리기 1은 점프
         self.jumpstate = 0
         self.attackstate = 0
-    def update(self):
+    def update(self,frame_time):
+        distance = Joro.RUN_SPEED_PPS * frame_time
         if (self.state == 0):
             self.frame = (self.frame + 1) % 6
         elif (self.state == -1):
@@ -194,14 +211,16 @@ class Joro:
         elif (self.state == 1):
             self.frame = (self.frame + 1) % 4
             if (self.jumpstate == 0):  # 올라가고
-                self.y += 25
+                self.y += distance
             if (self.y > 530):
                 self.jumpstate = 1
             if (self.jumpstate == 1):  # 내려가야함
-                self.y -= 25
+                self.y -= distance
             if (self.y <= 430):
                 self.jumpstate = 0
                 self.state = 0
+        elif (self.state == 2):
+            self.frame = (self.frame + 1) % 6
 
     def drawrun(self):
         self.runimage.clip_draw(self.frame * 160, 0, 160, 150, self.x, self.y)
@@ -283,8 +302,8 @@ def handle_events():
 def update():
     frame_time = get_frame_time()
 
-    rupy.update()
-    joro.update()
+    rupy.update(frame_time)
+    joro.update(frame_time)
     background.update(frame_time)
     grass.update(frame_time)
     for coindown in coinsdown:
