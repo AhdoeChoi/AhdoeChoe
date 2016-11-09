@@ -38,6 +38,11 @@ class CoinDown:
     def draw(self):
         self.image.draw(self.x, self.y)
 
+    def get_bb(self):
+        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
 
 class CoinUp:
     PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
@@ -58,6 +63,12 @@ class CoinUp:
     def draw(self):
         self.image.draw(self.x, self.y)
 
+    def get_bb(self):
+        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
+
 class ObstacleDown:
     PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
     RUN_SPEED_KMPH = 20.0  # Km/Hour
@@ -66,16 +77,20 @@ class ObstacleDown:
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
     image = None
     def __init__(self):
-        self.x = 100 *random.randint(1,15)
-        self.y = 180
+        self.x = 100 *random.randint(1,10)
+        self.y = 80
         if ObstacleDown.image == None:
             ObstacleDown.image   = load_image('obstacle.png')
     def draw(self):
-        self.image.draw(self.x,self.y - 90)
+        self.image.draw(self.x,self.y)
     def update(self,frame_time):
         distance = ObstacleDown.RUN_SPEED_PPS * frame_time
         self.x -= distance
+    def get_bb(self):
+        return self.x - 20, self.y - 20, self.x + 20, self.y + 20
 
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
 
 
 class ObstacleUp:
@@ -86,16 +101,20 @@ class ObstacleUp:
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
     image = None
     def __init__(self):
-        self.x = 100 * random.randint(1,15)
-        self.y = 480
+        self.x = 100 * random.randint(1,10)
+        self.y = 380
         if ObstacleUp.image == None:
             ObstacleUp.image   = load_image('obstacle.png')
     def draw(self):
-        self.image.draw(self.x,self.y - 90)
+        self.image.draw(self.x,self.y)
     def update(self,frame_time):
         distance = ObstacleUp.RUN_SPEED_PPS * frame_time
         self.x -= distance
+    def get_bb(self):
+        return self.x - 20, self.y - 20, self.x + 20, self.y + 20
 
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
 
 class Grass:
     PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
@@ -183,6 +202,13 @@ class Rupy:
     def drawcrush(self):
        self.crushimage.clip_draw(self.frame*125,0,125,150,self.x,self.y)
 
+
+    def get_bb(self):
+        return self.x - 30, self.y - 50, self.x + 30, self.y + 50
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
+
 class Joro:
 
     PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
@@ -229,6 +255,12 @@ class Joro:
     def drawattack(self):
         self.attackimage.clip_draw(self.frame * 188, 0, 180, 200, self.x+10, self.y+15)
 
+
+    def get_bb(self):
+        return self.x - 20, self.y - 50, self.x + 40, self.y + 50
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
 
 current_time = 0.0
 
@@ -315,11 +347,39 @@ def update():
     for obstacleup in obstaclesup:
         obstacleup.update(frame_time)
 
+    for coinup in coinsup:
+        if collide(joro, coinup):
+             #print("collision")
+            coinsup.remove(coinup)
 
+    for coindown in coinsdown:
+        if collide(rupy, coindown):
+             # print("collision")
+            coinsdown.remove(coindown)
 
+    for obstacleup in obstaclesup:
+        if collide(joro, obstacleup):
+            # print("collision")
+            obstaclesup.remove(obstacleup)
+
+    for obstacledown in obstaclesdown:
+        if collide(rupy, obstacledown):
+            # print("collision")
+            obstaclesdown.remove(obstacledown)
 
 
     #pass
+
+def collide(a,b):
+    left_a, bottom_a, right_a, top_a = a.get_bb()
+    left_b, bottom_b, right_b, top_b = b.get_bb()
+
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+
+    return True
 
 
 def draw():
@@ -327,6 +387,7 @@ def draw():
 
     background.draw()
     grass.draw()
+
 
     #루피 그리기
     if(rupy.state == 0):
@@ -368,12 +429,10 @@ def draw():
 
     #코인 클래스그리기기
     for coindown in coinsdown:
-        if(coindown.x > rupy.x + 50):
-            coindown.draw()
+        coindown.draw()
 
     for coinup in coinsup:
-        if(coinup.x > joro. x +50):
-            coinup.draw()
+         coinup.draw()
 
      #장애물 클래스 그리기
     for obstacledown in obstaclesdown:
@@ -381,6 +440,25 @@ def draw():
 
     for obstacleup in obstaclesup:
         obstacleup.draw()
+
+
+
+     #충돌체크 박스 그리기
+
+    rupy.draw_bb()
+    joro.draw_bb()
+
+    for coinup in coinsup:
+        coinup.draw_bb()
+    for coindown in coinsdown:
+        coindown.draw_bb()
+    for obstacleup in obstaclesup:
+        obstacleup.draw_bb()
+    for obstacledown in obstaclesdown:
+        obstacledown.draw_bb()
+
+    #충돌체크 박스 그리기 끝
+
     update_canvas()
 
     delay(0.05)

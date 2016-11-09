@@ -63,11 +63,17 @@
       <file leaf-file-name="main_state.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main_state.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="188" column="22" selection-start-line="188" selection-start-column="22" selection-end-line="188" selection-end-column="22" />
+            <state relative-caret-position="171">
+              <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#7886#8064#0" expanded="false" />
+                <element signature="e#3331#3868#0" expanded="false" />
+                <element signature="e#3893#4433#0" expanded="false" />
+                <element signature="e#4451#6411#0" expanded="false" />
+                <element signature="e#6430#8206#0" expanded="false" />
+                <element signature="e#8255#8371#0" expanded="false" />
+                <element signature="e#8391#8764#0" expanded="false" />
+                <element signature="e#8783#8961#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -127,8 +133,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="-13" />
+    <option name="y" value="10" />
     <option name="width" value="1382" />
     <option name="height" value="744" />
   </component>
@@ -157,8 +163,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -179,10 +183,13 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="C:/2DGP-2/2016-2DGP/Labs/Lab09 - Collision Handling" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Choi/PycharmProjects/AhdoeChoe -Git/2DProjectFile/rupy_attack.png" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -444,8 +451,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-13" y="10" width="1382" height="744" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -489,22 +496,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main_state.py</url>
-          <line>60</line>
+          <line>71</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main_state.py</url>
-          <line>134</line>
+          <line>153</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main_state.py</url>
-          <line>185</line>
+          <line>211</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main_state.py</url>
-          <line>324</line>
+          <line>384</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
@@ -737,11 +744,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/run_animation.png" />
-    <entry file="file://$PROJECT_DIR$/obstacle.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game_framework.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1653">
@@ -794,13 +796,24 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/obstacle.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main_state.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="188" column="22" selection-start-line="188" selection-start-column="22" selection-end-line="188" selection-end-column="22" />
+        <state relative-caret-position="171">
+          <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#7886#8064#0" expanded="false" />
+            <element signature="e#3331#3868#0" expanded="false" />
+            <element signature="e#3893#4433#0" expanded="false" />
+            <element signature="e#4451#6411#0" expanded="false" />
+            <element signature="e#6430#8206#0" expanded="false" />
+            <element signature="e#8255#8371#0" expanded="false" />
+            <element signature="e#8391#8764#0" expanded="false" />
+            <element signature="e#8783#8961#0" expanded="false" />
           </folding>
         </state>
       </provider>
