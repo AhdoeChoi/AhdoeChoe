@@ -50,32 +50,30 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game_framework.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/game_framework.py">
+      <file leaf-file-name="main_state.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/main_state.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1653">
-              <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="328">
+              <caret line="266" column="57" selection-start-line="266" selection-start-column="57" selection-end-line="266" selection-end-column="57" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+                <element signature="e#199#958#0" expanded="false" />
+                <element signature="e#978#1727#0" expanded="false" />
+                <element signature="e#3333#3870#0" expanded="false" />
+                <element signature="e#3895#4435#0" expanded="false" />
+                <element signature="e#8610#8726#0" expanded="false" />
+                <element signature="e#8746#9119#0" expanded="false" />
+                <element signature="e#9138#9316#0" expanded="false" />
+                <element signature="e#9392#10173#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main_state.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/main_state.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#3331#3868#0" expanded="false" />
-                <element signature="e#3893#4433#0" expanded="false" />
-                <element signature="e#4451#6411#0" expanded="false" />
-                <element signature="e#6430#8206#0" expanded="false" />
-                <element signature="e#8255#8371#0" expanded="false" />
-                <element signature="e#8391#8764#0" expanded="false" />
-                <element signature="e#8783#8961#0" expanded="false" />
-              </folding>
-            </state>
+      <file leaf-file-name="joro_crush.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/joro_crush.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -133,8 +131,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-13" />
-    <option name="y" value="10" />
+    <option name="x" value="-212" />
+    <option name="y" value="31" />
     <option name="width" value="1382" />
     <option name="height" value="744" />
   </component>
@@ -163,6 +161,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -183,12 +182,11 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="C:/2DGP-2/2016-2DGP/Labs/Lab09 - Collision Handling" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Choi/PycharmProjects/AhdoeChoe -Git/2DProjectFile/rupy_attack.png" />
   </component>
   <component name="RecentsManager">
@@ -451,17 +449,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-13" y="10" width="1382" height="744" extended-state="0" />
-    <editor active="false" />
+    <frame x="-212" y="31" width="1382" height="744" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31811023" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -506,25 +504,25 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main_state.py</url>
-          <line>211</line>
+          <line>215</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main_state.py</url>
-          <line>384</line>
+          <line>398</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main_state.py</url>
+          <line>95</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="7" />
+      <option name="time" value="8" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/joro_run.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grass.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -738,11 +736,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rupy_crush.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/run_animation.png" />
     <entry file="file://$PROJECT_DIR$/game_framework.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -801,19 +794,30 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/rupy_crush.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/joro_crush.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main_state.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+        <state relative-caret-position="328">
+          <caret line="266" column="57" selection-start-line="266" selection-start-column="57" selection-end-line="266" selection-end-column="57" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#3331#3868#0" expanded="false" />
-            <element signature="e#3893#4433#0" expanded="false" />
-            <element signature="e#4451#6411#0" expanded="false" />
-            <element signature="e#6430#8206#0" expanded="false" />
-            <element signature="e#8255#8371#0" expanded="false" />
-            <element signature="e#8391#8764#0" expanded="false" />
-            <element signature="e#8783#8961#0" expanded="false" />
+            <element signature="e#199#958#0" expanded="false" />
+            <element signature="e#978#1727#0" expanded="false" />
+            <element signature="e#3333#3870#0" expanded="false" />
+            <element signature="e#3895#4435#0" expanded="false" />
+            <element signature="e#8610#8726#0" expanded="false" />
+            <element signature="e#8746#9119#0" expanded="false" />
+            <element signature="e#9138#9316#0" expanded="false" />
+            <element signature="e#9392#10173#0" expanded="false" />
           </folding>
         </state>
       </provider>

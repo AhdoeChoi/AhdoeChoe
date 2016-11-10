@@ -77,7 +77,7 @@ class ObstacleDown:
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
     image = None
     def __init__(self):
-        self.x = 100 *random.randint(1,10)
+        self.x = 150 *random.randint(10,20)
         self.y = 80
         if ObstacleDown.image == None:
             ObstacleDown.image   = load_image('obstacle.png')
@@ -101,7 +101,7 @@ class ObstacleUp:
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
     image = None
     def __init__(self):
-        self.x = 100 * random.randint(1,10)
+        self.x = 150 * random.randint(10,20)
         self.y = 380
         if ObstacleUp.image == None:
             ObstacleUp.image   = load_image('obstacle.png')
@@ -169,10 +169,11 @@ class Rupy:
         self.crushimage = load_image('rupy_crush.png')
         self.i = 0
 
-        self.state = 0 # 0은 달리기 1은 점프
+        self.state = 0 # 0은 달리기 1은 점프 2는 공격 -1은 충돌
         self.jumpstate = 0 #0이면 up 1이면 down
         self.attackstate = 0
         self.crushstate = 0
+
     def update(self,frame_time):
        distance = Rupy.RUN_SPEED_PPS * frame_time
        if(self.state == 0 ):
@@ -192,6 +193,8 @@ class Rupy:
                self.state = 0
        elif (self.state == 2):
            self.frame = (self.frame + 1) % 6
+       elif (self.state == -1):
+           self.frame = (self.frame + 1) % 4
 
     def drawrun(self):
         self.runimage.clip_draw(self.frame*150, 0, 120, 150, self.x, self.y)
@@ -200,7 +203,8 @@ class Rupy:
     def drawattack(self):
        self.attackimage.clip_draw(self.frame * 153,5,155,170,self.x,self.y+10)
     def drawcrush(self):
-       self.crushimage.clip_draw(self.frame*125,0,125,150,self.x,self.y)
+       self.crushimage.clip_draw(self.frame*142,0,142,123,self.x,self.y)
+
 
 
     def get_bb(self):
@@ -224,10 +228,13 @@ class Joro:
         self.runimage = load_image('joro_run.png')
         self.jumpimage = load_image('joro_jump.png')
         self.attackimage = load_image('joro_attack.png')
+        self.crushimage = load_image('joro_crush.png')
 
         self.state = 0 # 0은 달리기 1은 점프
         self.jumpstate = 0
         self.attackstate = 0
+        self.crushstate = 0
+
     def update(self,frame_time):
         distance = Joro.RUN_SPEED_PPS * frame_time
         if (self.state == 0):
@@ -247,6 +254,8 @@ class Joro:
                 self.state = 0
         elif (self.state == 2):
             self.frame = (self.frame + 1) % 6
+        elif (self.state == -1):
+            self.frame = (self.frame + 1) % 4
 
     def drawrun(self):
         self.runimage.clip_draw(self.frame * 160, 0, 160, 150, self.x, self.y)
@@ -254,6 +263,8 @@ class Joro:
         self.jumpimage.clip_draw(self.frame * 175, 0, 150, 200, self.x, self.y)
     def drawattack(self):
         self.attackimage.clip_draw(self.frame * 188, 0, 180, 200, self.x+10, self.y+15)
+    def drawcrush(self):
+       self.crushimage.clip_draw(self.frame*172,0,172,140,self.x,self.y)
 
 
     def get_bb(self):
@@ -357,15 +368,18 @@ def update():
              # print("collision")
             coinsdown.remove(coindown)
 
+
     for obstacleup in obstaclesup:
         if collide(joro, obstacleup):
             # print("collision")
             obstaclesup.remove(obstacleup)
+            joro.state = -1
 
     for obstacledown in obstaclesdown:
         if collide(rupy, obstacledown):
             # print("collision")
             obstaclesdown.remove(obstacledown)
+            rupy.state = -1
 
 
     #pass
@@ -404,7 +418,7 @@ def draw():
         rupy.drawattack()
 
     if(rupy.state == -1):
-        if(rupy.crushstate > 1):
+        if(rupy.crushstate > 0.5):
             rupy.state = 0
             rupy.crushstate = 0
         else:
@@ -427,6 +441,14 @@ def draw():
             joro.attackstate += 0.1
         joro.drawattack()
 
+    if (joro.state == -1):
+        if (joro.crushstate > 0.5):
+            joro.state = 0
+            joro.crushstate = 0
+
+        else:
+            joro.crushstate += 0.1
+        joro.drawcrush()
     #코인 클래스그리기기
     for coindown in coinsdown:
         coindown.draw()
