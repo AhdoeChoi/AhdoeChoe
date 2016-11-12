@@ -160,6 +160,7 @@ class Rupy:
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
     def __init__(self):
+        self.hp = 10
         self.x = 80
         self.y = 130
         self.frame = 0
@@ -177,7 +178,9 @@ class Rupy:
     def update(self,frame_time):
        distance = Rupy.RUN_SPEED_PPS * frame_time
        if(self.state == 0 ):
-            self.frame = (self.frame+1) % 6
+           if (self.y > 130):
+               self.y = 130
+           self.frame = (self.frame+1) % 6
        elif(self.state == -1):
             self.frame = (self.frame+1) % 4
        elif (self.state == 1):
@@ -191,10 +194,9 @@ class Rupy:
            if (self.y <= 130):
                self.jumpstate = 0
                self.state = 0
-       elif (self.state == 2):
+       elif (self.state == 2): #공격
            self.frame = (self.frame + 1) % 6
-       elif (self.state == -1):
-           self.frame = (self.frame + 1) % 4
+
 
     def drawrun(self):
         self.runimage.clip_draw(self.frame*150, 0, 120, 150, self.x, self.y)
@@ -208,7 +210,10 @@ class Rupy:
 
 
     def get_bb(self):
-        return self.x - 30, self.y - 50, self.x + 30, self.y + 50
+        if(self.state!=2):
+            return self.x - 10, self.y - 50, self.x + 30, self.y + 50
+        if(self.state==2):
+            return self.x - 10, self.y - 20, self.x + 80, self.y + 50
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
@@ -222,6 +227,7 @@ class Joro:
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
     def __init__(self):
+        self.hp = 10
         self.x = 80
         self.y = 430
         self.frame = 0
@@ -238,6 +244,8 @@ class Joro:
     def update(self,frame_time):
         distance = Joro.RUN_SPEED_PPS * frame_time
         if (self.state == 0):
+            if (self.y > 430):
+                self.y = 430
             self.frame = (self.frame + 1) % 6
         elif (self.state == -1):
             self.frame = (self.frame + 1) % 4
@@ -268,8 +276,10 @@ class Joro:
 
 
     def get_bb(self):
-        return self.x - 20, self.y - 50, self.x + 40, self.y + 50
-
+        if(self.state != 2):
+            return self.x - 10, self.y - 50, self.x + 30, self.y + 50
+        if(self.state ==2):
+            return self.x-10,self.y-20, self.x+80,self.y+50
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
 
@@ -292,8 +302,8 @@ def enter():
     grass = Grass()
     coinsdown = [CoinDown() for i in range(30)]
     coinsup = [CoinUp() for i in range(30)]
-    obstaclesdown = [ObstacleDown() for i in range(3)]
-    obstaclesup = [ObstacleUp() for i in range(3)]
+    obstaclesdown = [ObstacleDown() for i in range(30)]
+    obstaclesup = [ObstacleUp() for i in range(30)]
 
     #pass
 
@@ -374,12 +384,15 @@ def update():
             # print("collision")
             obstaclesup.remove(obstacleup)
             joro.state = -1
-
+            joro.hp -=1
+            print(joro.hp)
     for obstacledown in obstaclesdown:
         if collide(rupy, obstacledown):
             # print("collision")
             obstaclesdown.remove(obstacledown)
             rupy.state = -1
+            rupy.hp -= 1
+            print(rupy.hp)
 
 
     #pass
