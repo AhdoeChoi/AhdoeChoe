@@ -1,6 +1,7 @@
 import random
 import json
 import os
+import math
 
 from pico2d import *
 
@@ -60,6 +61,7 @@ class CoinUp:
     def update(self,frame_time):
         distance = CoinUp.RUN_SPEED_PPS * frame_time
         self.x -= distance
+
     def draw(self):
         self.image.draw(self.x, self.y)
 
@@ -210,9 +212,9 @@ class Rupy:
 
 
     def get_bb(self):
-        if(self.state!=2):
+        if(self.state != 2):
             return self.x - 10, self.y - 50, self.x + 30, self.y + 50
-        if(self.state==2):
+        if(self.state == 2):
             return self.x - 10, self.y - 20, self.x + 80, self.y + 50
 
     def draw_bb(self):
@@ -400,6 +402,7 @@ def update():
 def collide(a,b):
     left_a, bottom_a, right_a, top_a = a.get_bb()
     left_b, bottom_b, right_b, top_b = b.get_bb()
+
 
     if left_a > right_b : return False
     if right_a < left_b : return False
