@@ -7,8 +7,9 @@ from pico2d import *
 
 import game_framework
 import title_state
-
-
+import ranking_state
+hp = 10
+coin = 0
 
 name = "MainState"
 
@@ -17,6 +18,117 @@ grass = None
 joro = None
 Background = None
 
+
+
+class DragonDown:
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 20.0  # Km/Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+    image = None
+    def __init__(self):
+        self.x = 50*random.randint(1,400)
+        self.y =  150
+        if DragonDown.image == None:
+            DragonDown.image   = load_image('dragon.png')
+
+    def update(self,frame_time):
+
+        distance = DragonDown.RUN_SPEED_PPS * frame_time
+        self.x -=  distance
+
+    def draw(self):
+        self.image.draw(self.x, self.y)
+
+    def get_bb(self):
+        return self.x - 50, self.y - 10, self.x + 50, self.y + 10
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
+
+class DragonUp:
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 20.0  # Km/Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+    image = None
+    def __init__(self):
+        self.x = 50*random.randint(1,400)
+        self.y = 430
+        if DragonUp.image == None:
+            DragonUp.image   = load_image('dragon.png')
+    def update(self,frame_time):
+        distance = DragonUp.RUN_SPEED_PPS * frame_time
+        self.x -= distance
+
+    def draw(self):
+        self.image.draw(self.x, self.y)
+
+    def get_bb(self):
+        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
+
+class  EnergyDown:
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 20.0  # Km/Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+    image = None
+    def __init__(self):
+        self.x = 500*random.randint(1,30)
+        self.y = 130
+        if EnergyDown.image == None:
+            EnergyDown.image   = load_image('energy.png')
+
+    def update(self,frame_time):
+
+        distance = EnergyDown.RUN_SPEED_PPS * frame_time
+        self.x -=  distance
+
+    def draw(self):
+        self.image.draw(self.x, self.y)
+
+    def get_bb(self):
+        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
+
+class EnergyUp:
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 20.0  # Km/Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+    image = None
+    def __init__(self):
+        self.x = 500*random.randint(1,30)
+        self.y = 430
+        if EnergyUp.image == None:
+            EnergyUp.image  = load_image('energy.png')
+    def update(self,frame_time):
+        distance = EnergyUp.RUN_SPEED_PPS * frame_time
+        self.x -= distance
+
+    def draw(self):
+        self.image.draw(self.x, self.y)
+
+    def get_bb(self):
+        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
+
+#
 class CoinDown:
     PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
     RUN_SPEED_KMPH = 20.0  # Km/Hour
@@ -26,8 +138,8 @@ class CoinDown:
 
     image = None
     def __init__(self):
-        self.x = 50*random.randint(1,30)
-        self.y = 130
+        self.x = 50*random.randint(1,400)
+        self.y = 50*math.cos(3*self.x) + 150
         if CoinDown.image == None:
             CoinDown.image   = load_image('coin.png')
 
@@ -54,8 +166,8 @@ class CoinUp:
 
     image = None
     def __init__(self):
-        self.x = 50*random.randint(1,30)
-        self.y = 430
+        self.x = 50*random.randint(1,400)
+        self.y = 50*math.cos(3*self.x) + 430
         if CoinUp.image == None:
             CoinUp.image   = load_image('coin.png')
     def update(self,frame_time):
@@ -79,7 +191,7 @@ class ObstacleDown:
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
     image = None
     def __init__(self):
-        self.x = 150 *random.randint(10,20)
+        self.x = 280 *random.randint(10,100)
         self.y = 80
         if ObstacleDown.image == None:
             ObstacleDown.image   = load_image('obstacle.png')
@@ -103,7 +215,7 @@ class ObstacleUp:
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
     image = None
     def __init__(self):
-        self.x = 150 * random.randint(10,20)
+        self.x = 250 * random.randint(10,100)
         self.y = 380
         if ObstacleUp.image == None:
             ObstacleUp.image   = load_image('obstacle.png')
@@ -127,7 +239,7 @@ class Grass:
 
     def __init__(self):
         self.x = 0
-        self.image = load_image('grass.png')
+        self.image = load_image('grass.jpg')
     def draw(self):
         self.image.draw(1400-self.x,30)
         self.image.draw(1400-self.x,330)
@@ -138,7 +250,7 @@ class Grass:
 
 class BackGround:
     PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 1.0  # Km/Hour
+    RUN_SPEED_KMPH = 0.5  # Km/Hour
     RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -162,6 +274,7 @@ class Rupy:
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
     def __init__(self):
+        self.life_time = 0.0
         self.hp = 10
         self.x = 80
         self.y = 130
@@ -178,6 +291,7 @@ class Rupy:
         self.crushstate = 0
 
     def update(self,frame_time):
+       self.life_time += frame_time
        distance = Rupy.RUN_SPEED_PPS * frame_time
        if(self.state == 0 ):
            if (self.y > 130):
@@ -212,13 +326,17 @@ class Rupy:
 
 
     def get_bb(self):
-        if(self.state != 2):
-            return self.x - 10, self.y - 50, self.x + 30, self.y + 50
+        return self.x - 10, self.y - 40, self.x + 30, self.y + 50
+    def get_bb_attack(self):
         if(self.state == 2):
-            return self.x - 10, self.y - 20, self.x + 80, self.y + 50
+            return self.x-10,self.y-20, self.x+80,self.y+50
+
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
+    def draw_bb_attack(self):
+        if(self.state == 2):
+            draw_rectangle(*self.get_bb_attack())
 
 class Joro:
 
@@ -278,12 +396,18 @@ class Joro:
 
 
     def get_bb(self):
-        if(self.state != 2):
-            return self.x - 10, self.y - 50, self.x + 30, self.y + 50
-        if(self.state ==2):
-            return self.x-10,self.y-20, self.x+80,self.y+50
+        return self.x - 10, self.y - 40, self.x + 30, self.y + 50
+
+    def get_bb_attack(self):
+        if (self.state == 2):
+            return self.x - 10, self.y - 20, self.x + 80, self.y + 50
+
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
+
+    def draw_bb_attack(self):
+        if (self.state == 2):
+            draw_rectangle(*self.get_bb_attack())
 
 current_time = 0.0
 
@@ -297,28 +421,51 @@ def get_frame_time():
 
 
 def enter():
-    global rupy, joro,background,grass,coinsdown,coinsup,obstaclesdown,obstaclesup
+    global rupy, joro,background,grass,coinsdown,coinsup,obstaclesdown,obstaclesup,energysup,energysdown,dragonsup,dragonsdown
+    global font
     rupy = Rupy()
     joro = Joro()
     background = BackGround()
     grass = Grass()
-    coinsdown = [CoinDown() for i in range(30)]
-    coinsup = [CoinUp() for i in range(30)]
-    obstaclesdown = [ObstacleDown() for i in range(30)]
-    obstaclesup = [ObstacleUp() for i in range(30)]
-
+    coinsdown = [CoinDown() for i in range(70)]
+    coinsup = [CoinUp() for i in range(70)]
+    obstaclesdown = [ObstacleDown() for i in range(50)]
+    obstaclesup = [ObstacleUp() for i in range(50)]
+    energysup = [EnergyUp() for i in range(3)]
+    energysdown = [EnergyDown() for i in range(3)]
+    dragonsup = [DragonUp() for i in range(20)]
+    dragonsdown = [DragonDown() for i in range(20)]
+    font = load_font('ENCR10B.TTF')
     #pass
 
 
 def exit():
-    global rupy, joro, background, grass,coinsdown
-    del(rupy)
-    del(joro)
-    del(background)
-    del(grass)
-    del(coinsdown)
-    del(coinsup)
-    del(obstaclesdown)
+    global rupy, joro, background, grass,coinsdown , font
+
+    print('TIME: %4.1f, Coin:%3d, Hp:%3d' %
+          (rupy.life_time, coin, hp))
+
+    f = open('data.txt', 'r')
+    score_data = json.load(f)
+    f.close()
+
+    score_data.append({"Time": rupy.life_time, "Coin": coin, "Hp": hp})
+    print(score_data)
+
+    f = open('data.txt', 'w')
+    json.dump(score_data, f)
+    f.close()
+    #del(rupy)
+   # del(joro)
+    #del(background)
+    #del(grass)
+    #del(coinsdown)
+    #del(coinsup)
+   # del(obstaclesdown)
+    #del(energysup)
+    #del(energysdown)
+   # del(dragonsup)
+   # del(dragonsdown)
     #pass
 
 
@@ -332,72 +479,30 @@ def resume():
 def handle_events():
     events = get_events()
     for event in events:
+
         if event.type == SDL_QUIT:
             game_framework.quit()
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            game_framework.change_state(title_state)
-        #루피 부분
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_UP:
-            rupy.state = 1
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_RIGHT:
-            if rupy.state != 1:
-                rupy.state = 2 # 2는 공격
-        #여기 까지
+        else:
+            if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+                game_framework.change_state(title_state)
+            if (event.type, event.key) == (SDL_KEYDOWN,SDLK_q):
+                game_framework.change_state(ranking_state)
+            #루피 부분
+            elif event.type == SDL_KEYDOWN and event.key == SDLK_UP:
+                rupy.state = 1
+            elif event.type == SDL_KEYDOWN and event.key == SDLK_RIGHT:
+                if rupy.state != 1:
+                    rupy.state = 2 # 2는 공격
+            #여기 까지
 
-        #조로 부분
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_w:
-            joro.state = 1 #1은 점프
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_d:
-            if joro.state != 1:
-                joro.state = 2  # 2는 공격
-        #여기 까지
-            #pass
-
-
-def update():
-    frame_time = get_frame_time()
-
-    rupy.update(frame_time)
-    joro.update(frame_time)
-    background.update(frame_time)
-    grass.update(frame_time)
-    for coindown in coinsdown:
-        coindown.update(frame_time)
-    for coinup in coinsup:
-        coinup.update(frame_time)
-    for obstacledown in obstaclesdown:
-        obstacledown.update(frame_time)
-    for obstacleup in obstaclesup:
-        obstacleup.update(frame_time)
-
-    for coinup in coinsup:
-        if collide(joro, coinup):
-             #print("collision")
-            coinsup.remove(coinup)
-
-    for coindown in coinsdown:
-        if collide(rupy, coindown):
-             # print("collision")
-            coinsdown.remove(coindown)
-
-
-    for obstacleup in obstaclesup:
-        if collide(joro, obstacleup):
-            # print("collision")
-            obstaclesup.remove(obstacleup)
-            joro.state = -1
-            joro.hp -=1
-            print(joro.hp)
-    for obstacledown in obstaclesdown:
-        if collide(rupy, obstacledown):
-            # print("collision")
-            obstaclesdown.remove(obstacledown)
-            rupy.state = -1
-            rupy.hp -= 1
-            print(rupy.hp)
-
-
-    #pass
+            #조로 부분
+            elif event.type == SDL_KEYDOWN and event.key == SDLK_w:
+                joro.state = 1 #1은 점프
+            elif event.type == SDL_KEYDOWN and event.key == SDLK_d:
+                if joro.state != 1:
+                    joro.state = 2  # 2는 공격
+            #여기 까지
+                #pass
 
 def collide(a,b):
     left_a, bottom_a, right_a, top_a = a.get_bb()
@@ -412,7 +517,97 @@ def collide(a,b):
     return True
 
 
+def update():
+    global hp
+    global coin
+    frame_time = get_frame_time()
+    print(hp)
+    #if(hp < 0):
+        #game_framework.change_state(ranking_state)
+    rupy.update(frame_time)
+    joro.update(frame_time)
+    background.update(frame_time)
+    grass.update(frame_time)
+    for coindown in coinsdown:
+        coindown.update(frame_time)
+    for coinup in coinsup:
+        coinup.update(frame_time)
+    for obstacledown in obstaclesdown:
+        obstacledown.update(frame_time)
+    for obstacleup in obstaclesup:
+        obstacleup.update(frame_time)
+    for energyup in energysup:
+        energyup.update(frame_time)
+    for energydown in energysdown:
+        energydown.update(frame_time)
+    for dragonup in dragonsup:
+        dragonup.update(frame_time)
+    for dragondown in dragonsdown:
+        dragondown.update(frame_time)
+    for coinup in coinsup:
+        if collide(joro, coinup):
+             #print("collision")
+            coinsup.remove(coinup)
+            coin +=1
+
+    for coindown in coinsdown:
+        if collide(rupy, coindown):
+             # print("collision")
+            coinsdown.remove(coindown)
+            coin += 1
+
+    for obstacleup in obstaclesup:
+        if collide(joro, obstacleup):
+            # print("collision")
+            obstaclesup.remove(obstacleup)
+            joro.state = -1
+            joro.jumpstate = 0
+
+
+    for obstacledown in obstaclesdown:
+        if collide(rupy, obstacledown):
+            # print("collision")
+            obstaclesdown.remove(obstacledown)
+            rupy.state = -1
+            rupy.jumpstate = 0
+
+
+
+    for energyup in energysup:
+        if collide(joro, energyup):
+            energysup.remove(energyup)
+            hp +=1
+    for energydown in energysdown:
+        if collide(rupy, energydown):
+            energysdown.remove(energydown)
+            hp += 1
+
+    for dragonup in dragonsup:
+        if collide(joro,dragonup):
+            joro.state = -1
+            joro.jumpstate = 0
+            dragonsup.remove(dragonup)
+    for dragondown in dragonsdown:
+        if collide(rupy, dragondown):
+            rupy.state = -1
+            rupy.jumpstate = 0
+            dragonsdown.remove(dragondown)
+
+
+    if(grass.x > 1700):
+        grass.x = 0
+    if(background.x > 200):
+        background.x = 50
+
+    #Dragon 장애물
+
+    #pass
+
+    print(rupy.life_time)
+    #print("joro State :  ", joro.state)
+
 def draw():
+    global hp
     clear_canvas()
 
     background.draw()
@@ -436,6 +631,7 @@ def draw():
     if(rupy.state == -1):
         if(rupy.crushstate > 0.5):
             rupy.state = 0
+            hp -=1
             rupy.crushstate = 0
         else:
             rupy.crushstate += 0.1
@@ -460,6 +656,7 @@ def draw():
     if (joro.state == -1):
         if (joro.crushstate > 0.5):
             joro.state = 0
+            hp -= 1
             joro.crushstate = 0
 
         else:
@@ -479,12 +676,27 @@ def draw():
     for obstacleup in obstaclesup:
         obstacleup.draw()
 
+    #에너지 클래스 그리기
+    for energyup in energysup:
+        energyup.draw()
 
+    for energydown in energysdown:
+        energydown.draw()
+
+    #드래곤 클래스 그리기
+    for dragonup in dragonsup:
+        dragonup.draw()
+
+    for dragondown in dragonsdown:
+        dragondown.draw()
 
      #충돌체크 박스 그리기
 
     rupy.draw_bb()
+    rupy.draw_bb_attack()
+
     joro.draw_bb()
+    joro.draw_bb_attack()
 
     for coinup in coinsup:
         coinup.draw_bb()
