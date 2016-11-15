@@ -8,7 +8,7 @@ from pico2d import *
 import game_framework
 import title_state
 import ranking_state
-hp = 10
+hp = 8
 coin = 0
 
 name = "MainState"
@@ -18,7 +18,42 @@ grass = None
 joro = None
 Background = None
 
+class HPBar:
+    global hp
+    image = None
 
+    def __init__(self):
+        self.x = 400
+        self.y = 570
+        self.hpstate = hp
+        self.hp8 = load_image('hp8.png')
+        self.hp7 = load_image('hp7.png')
+        self.hp6 = load_image('hp6.png')
+        self.hp5 = load_image('hp5.png')
+        self.hp4 = load_image('hp4.png')
+        self.hp3 = load_image('hp3.png')
+        self.hp2 = load_image('hp2.png')
+        self.hp1 = load_image('hp1.png')
+
+    def update(self,frame_time):
+        self.hpstate = hp
+
+    def drawhp8(self):
+        self.hp8.draw(self.x,self.y)
+    def drawhp7(self):
+        self.hp7.draw(self.x, self.y)
+    def drawhp6(self):
+        self.hp6.draw(self.x, self.y)
+    def drawhp5(self):
+        self.hp5.draw(self.x, self.y)
+    def drawhp4(self):
+        self.hp4.draw(self.x, self.y)
+    def drawhp3(self):
+        self.hp3.draw(self.x, self.y)
+    def drawhp2(self):
+        self.hp2.draw(self.x, self.y)
+    def drawhp1(self):
+        self.hp1.draw(self.x, self.y)
 
 class DragonDown:
     PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
@@ -421,12 +456,13 @@ def get_frame_time():
 
 
 def enter():
-    global rupy, joro,background,grass,coinsdown,coinsup,obstaclesdown,obstaclesup,energysup,energysdown,dragonsup,dragonsdown
+    global rupy, joro,background,grass,coinsdown,coinsup,obstaclesdown,obstaclesup,energysup,energysdown,dragonsup,dragonsdown,hpbar
     global font
     rupy = Rupy()
     joro = Joro()
     background = BackGround()
     grass = Grass()
+    hpbar = HPBar()
     coinsdown = [CoinDown() for i in range(70)]
     coinsup = [CoinUp() for i in range(70)]
     obstaclesdown = [ObstacleDown() for i in range(50)]
@@ -440,32 +476,34 @@ def enter():
 
 
 def exit():
-    global rupy, joro, background, grass,coinsdown , font
+    global rupy, joro, background, grass,coinsdown , font,hp
 
-    print('TIME: %4.1f, Coin:%3d, Hp:%3d' %
-          (rupy.life_time, coin, hp))
+    #print('TIME: %4.1f, Coin:%3d, Hp:%3d' %
+         # (rupy.life_time, coin, hp))
 
     f = open('data.txt', 'r')
     score_data = json.load(f)
     f.close()
 
+    if(hp<0):
+        hp=0
     score_data.append({"Time": rupy.life_time, "Coin": coin, "Hp": hp})
-    print(score_data)
+    #print(score_data)
 
     f = open('data.txt', 'w')
     json.dump(score_data, f)
     f.close()
-    #del(rupy)
+   # del(rupy)
    # del(joro)
-    #del(background)
-    #del(grass)
-    #del(coinsdown)
-    #del(coinsup)
+   # del(background)
+  #  del(grass)
+   # del(coinsdown)
+   # del(coinsup)
    # del(obstaclesdown)
     #del(energysup)
-    #del(energysdown)
-   # del(dragonsup)
-   # del(dragonsdown)
+   # del(energysdown)
+    #del(dragonsup)
+    #del(dragonsdown)
     #pass
 
 
@@ -521,13 +559,15 @@ def update():
     global hp
     global coin
     frame_time = get_frame_time()
-    print(hp)
-    #if(hp < 0):
-        #game_framework.change_state(ranking_state)
+    print(hpbar.hpstate)
+
+    if(hp < 0):
+        game_framework.change_state(ranking_state)
     rupy.update(frame_time)
     joro.update(frame_time)
     background.update(frame_time)
     grass.update(frame_time)
+    hpbar.update(frame_time)
     for coindown in coinsdown:
         coindown.update(frame_time)
     for coinup in coinsup:
@@ -544,6 +584,9 @@ def update():
         dragonup.update(frame_time)
     for dragondown in dragonsdown:
         dragondown.update(frame_time)
+
+
+
     for coinup in coinsup:
         if collide(joro, coinup):
              #print("collision")
@@ -603,7 +646,7 @@ def update():
 
     #pass
 
-    print(rupy.life_time)
+    #print(rupy.life_time)
     #print("joro State :  ", joro.state)
 
 def draw():
@@ -689,6 +732,26 @@ def draw():
 
     for dragondown in dragonsdown:
         dragondown.draw()
+
+    #체력바 클래스 그리기
+    if(hpbar.hpstate > 8):
+        hpbar.drawhp8()
+    if(hpbar.hpstate == 8):
+        hpbar.drawhp8()
+    if (hpbar.hpstate == 7):
+         hpbar.drawhp7()
+    if (hpbar.hpstate == 6):
+        hpbar.drawhp6()
+    if (hpbar.hpstate == 5):
+        hpbar.drawhp5()
+    if (hpbar.hpstate == 4):
+        hpbar.drawhp4()
+    if (hpbar.hpstate == 3):
+        hpbar.drawhp3()
+    if (hpbar.hpstate == 2):
+        hpbar.drawhp2()
+    if (hpbar.hpstate == 1):
+        hpbar.drawhp1()
 
      #충돌체크 박스 그리기
 
