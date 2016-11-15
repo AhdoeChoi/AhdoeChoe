@@ -11,7 +11,7 @@ font = None
 
 def enter():
     global image, font #global 안해놓으면 내부에서 선언한 변수는 지역변수처럼 취급됨 (다른곳에서 사용하질 못함) 다른곳에서 사용하고싶으면 global해줘야함
-    image = load_image('board.png')
+    image = load_image('image\\board.png')
     font = load_font('ENCR10B.TTF',40)
 
 def exit():

@@ -5,6 +5,20 @@ import math
 
 from pico2d import *
 
+
+from object_rupy import Rupy
+from object_joro import Joro
+from object_dragondown import DragonDown
+from object_dragonup import DragonUp
+from object_energydown import EnergyDown
+from object_energyup import EnergyUp
+from object_coindown import CoinDown
+from object_coinup import CoinUp
+from object_obstacledown import ObstacleDown
+from object_obstacleup import ObstacleUp
+from object_grass import Grass
+from object_background import BackGround
+
 import game_framework
 import title_state
 import ranking_state
@@ -26,14 +40,14 @@ class HPBar:
         self.x = 400
         self.y = 570
         self.hpstate = hp
-        self.hp8 = load_image('hp8.png')
-        self.hp7 = load_image('hp7.png')
-        self.hp6 = load_image('hp6.png')
-        self.hp5 = load_image('hp5.png')
-        self.hp4 = load_image('hp4.png')
-        self.hp3 = load_image('hp3.png')
-        self.hp2 = load_image('hp2.png')
-        self.hp1 = load_image('hp1.png')
+        self.hp8 = load_image('image\\hp8.png')
+        self.hp7 = load_image('image\\hp7.png')
+        self.hp6 = load_image('image\\hp6.png')
+        self.hp5 = load_image('image\\hp5.png')
+        self.hp4 = load_image('image\\hp4.png')
+        self.hp3 = load_image('image\\hp3.png')
+        self.hp2 = load_image('image\\hp2.png')
+        self.hp1 = load_image('image\\hp1.png')
 
     def update(self,frame_time):
         self.hpstate = hp
@@ -55,394 +69,11 @@ class HPBar:
     def drawhp1(self):
         self.hp1.draw(self.x, self.y)
 
-class DragonDown:
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 20.0  # Km/Hour
-    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-
-    image = None
-    def __init__(self):
-        self.x = 50*random.randint(1,400)
-        self.y =  150
-        if DragonDown.image == None:
-            DragonDown.image   = load_image('dragon.png')
-
-    def update(self,frame_time):
-
-        distance = DragonDown.RUN_SPEED_PPS * frame_time
-        self.x -=  distance
-
-    def draw(self):
-        self.image.draw(self.x, self.y)
-
-    def get_bb(self):
-        return self.x - 50, self.y - 10, self.x + 50, self.y + 10
-
-    def draw_bb(self):
-        draw_rectangle(*self.get_bb())
-
-class DragonUp:
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 20.0  # Km/Hour
-    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-
-    image = None
-    def __init__(self):
-        self.x = 50*random.randint(1,400)
-        self.y = 430
-        if DragonUp.image == None:
-            DragonUp.image   = load_image('dragon.png')
-    def update(self,frame_time):
-        distance = DragonUp.RUN_SPEED_PPS * frame_time
-        self.x -= distance
-
-    def draw(self):
-        self.image.draw(self.x, self.y)
-
-    def get_bb(self):
-        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
-
-    def draw_bb(self):
-        draw_rectangle(*self.get_bb())
-
-class  EnergyDown:
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 20.0  # Km/Hour
-    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-
-    image = None
-    def __init__(self):
-        self.x = 500*random.randint(1,30)
-        self.y = 130
-        if EnergyDown.image == None:
-            EnergyDown.image   = load_image('energy.png')
-
-    def update(self,frame_time):
-
-        distance = EnergyDown.RUN_SPEED_PPS * frame_time
-        self.x -=  distance
-
-    def draw(self):
-        self.image.draw(self.x, self.y)
-
-    def get_bb(self):
-        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
-
-    def draw_bb(self):
-        draw_rectangle(*self.get_bb())
-
-class EnergyUp:
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 20.0  # Km/Hour
-    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-
-    image = None
-    def __init__(self):
-        self.x = 500*random.randint(1,30)
-        self.y = 430
-        if EnergyUp.image == None:
-            EnergyUp.image  = load_image('energy.png')
-    def update(self,frame_time):
-        distance = EnergyUp.RUN_SPEED_PPS * frame_time
-        self.x -= distance
-
-    def draw(self):
-        self.image.draw(self.x, self.y)
-
-    def get_bb(self):
-        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
-
-    def draw_bb(self):
-        draw_rectangle(*self.get_bb())
-
-#
-class CoinDown:
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 20.0  # Km/Hour
-    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-
-    image = None
-    def __init__(self):
-        self.x = 50*random.randint(1,400)
-        self.y = 50*math.cos(3*self.x) + 150
-        if CoinDown.image == None:
-            CoinDown.image   = load_image('coin.png')
-
-    def update(self,frame_time):
-
-        distance = CoinDown.RUN_SPEED_PPS * frame_time
-        self.x -=  distance
-
-    def draw(self):
-        self.image.draw(self.x, self.y)
-
-    def get_bb(self):
-        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
-
-    def draw_bb(self):
-        draw_rectangle(*self.get_bb())
-
-class CoinUp:
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 20.0  # Km/Hour
-    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-
-    image = None
-    def __init__(self):
-        self.x = 50*random.randint(1,400)
-        self.y = 50*math.cos(3*self.x) + 430
-        if CoinUp.image == None:
-            CoinUp.image   = load_image('coin.png')
-    def update(self,frame_time):
-        distance = CoinUp.RUN_SPEED_PPS * frame_time
-        self.x -= distance
-
-    def draw(self):
-        self.image.draw(self.x, self.y)
-
-    def get_bb(self):
-        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
-
-    def draw_bb(self):
-        draw_rectangle(*self.get_bb())
-
-class ObstacleDown:
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 20.0  # Km/Hour
-    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-    image = None
-    def __init__(self):
-        self.x = 280 *random.randint(10,100)
-        self.y = 80
-        if ObstacleDown.image == None:
-            ObstacleDown.image   = load_image('obstacle.png')
-    def draw(self):
-        self.image.draw(self.x,self.y)
-    def update(self,frame_time):
-        distance = ObstacleDown.RUN_SPEED_PPS * frame_time
-        self.x -= distance
-    def get_bb(self):
-        return self.x - 20, self.y - 20, self.x + 20, self.y + 20
-
-    def draw_bb(self):
-        draw_rectangle(*self.get_bb())
 
 
-class ObstacleUp:
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 20.0  # Km/Hour
-    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-    image = None
-    def __init__(self):
-        self.x = 250 * random.randint(10,100)
-        self.y = 380
-        if ObstacleUp.image == None:
-            ObstacleUp.image   = load_image('obstacle.png')
-    def draw(self):
-        self.image.draw(self.x,self.y)
-    def update(self,frame_time):
-        distance = ObstacleUp.RUN_SPEED_PPS * frame_time
-        self.x -= distance
-    def get_bb(self):
-        return self.x - 20, self.y - 20, self.x + 20, self.y + 20
-
-    def draw_bb(self):
-        draw_rectangle(*self.get_bb())
-
-class Grass:
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 20.0  # Km/Hour
-    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-
-    def __init__(self):
-        self.x = 0
-        self.image = load_image('grass.jpg')
-    def draw(self):
-        self.image.draw(1400-self.x,30)
-        self.image.draw(1400-self.x,330)
-    def update(self,frame_time):
-        distance = Grass.RUN_SPEED_PPS * frame_time
-        self.x += distance
-
-
-class BackGround:
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 0.5  # Km/Hour
-    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-    def __init__(self):
-        self.image = load_image('BackGround1.png')
-        self.x = 0
-        self.y = 0
-    def draw(self):
-        self.image.draw(400-self.x,300)
-    def update(self,frame_time):
-        distance = BackGround.RUN_SPEED_PPS * frame_time
-        self.x += distance
 
  #Charecter 객체
-class Rupy:
 
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 30.0  # Km/Hour
-    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-
-    def __init__(self):
-        self.life_time = 0.0
-        self.hp = 10
-        self.x = 80
-        self.y = 130
-        self.frame = 0
-        self.runimage = load_image('rupy_run.png')
-        self.jumpimage = load_image('rupy_jump.png')
-        self.attackimage = load_image('rupy_attack.png')
-        self.crushimage = load_image('rupy_crush.png')
-        self.i = 0
-
-        self.state = 0 # 0은 달리기 1은 점프 2는 공격 -1은 충돌
-        self.jumpstate = 0 #0이면 up 1이면 down
-        self.attackstate = 0
-        self.crushstate = 0
-
-    def update(self,frame_time):
-       self.life_time += frame_time
-       distance = Rupy.RUN_SPEED_PPS * frame_time
-       if(self.state == 0 ):
-           if (self.y > 130):
-               self.y = 130
-           self.frame = (self.frame+1) % 6
-       elif(self.state == -1):
-            self.frame = (self.frame+1) % 4
-       elif (self.state == 1):
-           self.frame = (self.frame + 1) % 4
-           if (self.jumpstate == 0):  # 올라가고
-               self.y += distance
-           if (self.y > 230):
-               self.jumpstate = 1
-           if (self.jumpstate == 1):  # 내려가야함
-               self.y -= distance
-           if (self.y <= 130):
-               self.jumpstate = 0
-               self.state = 0
-       elif (self.state == 2): #공격
-           self.frame = (self.frame + 1) % 6
-
-
-    def drawrun(self):
-        self.runimage.clip_draw(self.frame*150, 0, 120, 150, self.x, self.y)
-    def drawjump(self):
-       self.jumpimage.clip_draw(self.frame * 125, 0, 120, 200, self.x, self.y)
-    def drawattack(self):
-       self.attackimage.clip_draw(self.frame * 153,5,155,170,self.x,self.y+10)
-    def drawcrush(self):
-       self.crushimage.clip_draw(self.frame*142,0,142,123,self.x,self.y)
-
-
-
-    def get_bb(self):
-        return self.x - 10, self.y - 40, self.x + 30, self.y + 50
-    def get_bb_attack(self):
-        if(self.state == 2):
-            return self.x-10,self.y-20, self.x+80,self.y+50
-
-
-    def draw_bb(self):
-        draw_rectangle(*self.get_bb())
-    def draw_bb_attack(self):
-        if(self.state == 2):
-            draw_rectangle(*self.get_bb_attack())
-
-class Joro:
-
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 30.0  # Km/Hour
-    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-
-    def __init__(self):
-        self.hp = 10
-        self.x = 80
-        self.y = 430
-        self.frame = 0
-        self.runimage = load_image('joro_run.png')
-        self.jumpimage = load_image('joro_jump.png')
-        self.attackimage = load_image('joro_attack.png')
-        self.crushimage = load_image('joro_crush.png')
-
-        self.state = 0 # 0은 달리기 1은 점프
-        self.jumpstate = 0
-        self.attackstate = 0
-        self.crushstate = 0
-
-    def update(self,frame_time):
-        distance = Joro.RUN_SPEED_PPS * frame_time
-        if (self.state == 0):
-            if (self.y > 430):
-                self.y = 430
-            self.frame = (self.frame + 1) % 6
-        elif (self.state == -1):
-            self.frame = (self.frame + 1) % 4
-        elif (self.state == 1):
-            self.frame = (self.frame + 1) % 4
-            if (self.jumpstate == 0):  # 올라가고
-                self.y += distance
-            if (self.y > 530):
-                self.jumpstate = 1
-            if (self.jumpstate == 1):  # 내려가야함
-                self.y -= distance
-            if (self.y <= 430):
-                self.jumpstate = 0
-                self.state = 0
-        elif (self.state == 2):
-            self.frame = (self.frame + 1) % 6
-        elif (self.state == -1):
-            self.frame = (self.frame + 1) % 4
-
-    def drawrun(self):
-        self.runimage.clip_draw(self.frame * 160, 0, 160, 150, self.x, self.y)
-    def drawjump(self):
-        self.jumpimage.clip_draw(self.frame * 175, 0, 150, 200, self.x, self.y)
-    def drawattack(self):
-        self.attackimage.clip_draw(self.frame * 188, 0, 180, 200, self.x+10, self.y+15)
-    def drawcrush(self):
-       self.crushimage.clip_draw(self.frame*172,0,172,140,self.x,self.y)
-
-
-    def get_bb(self):
-        return self.x - 10, self.y - 40, self.x + 30, self.y + 50
-
-    def get_bb_attack(self):
-        if (self.state == 2):
-            return self.x - 10, self.y - 20, self.x + 80, self.y + 50
-
-    def draw_bb(self):
-        draw_rectangle(*self.get_bb())
-
-    def draw_bb_attack(self):
-        if (self.state == 2):
-            draw_rectangle(*self.get_bb_attack())
 
 current_time = 0.0
 
@@ -561,7 +192,7 @@ def update():
     frame_time = get_frame_time()
     print(hpbar.hpstate)
 
-    if(hp < 0):
+    if(hp < 1):
         game_framework.change_state(ranking_state)
     rupy.update(frame_time)
     joro.update(frame_time)
@@ -604,6 +235,7 @@ def update():
             # print("collision")
             obstaclesup.remove(obstacleup)
             joro.state = -1
+            hp -= 1
             joro.jumpstate = 0
 
 
@@ -612,6 +244,7 @@ def update():
             # print("collision")
             obstaclesdown.remove(obstacledown)
             rupy.state = -1
+            hp -= 1
             rupy.jumpstate = 0
 
 
@@ -627,20 +260,24 @@ def update():
 
     for dragonup in dragonsup:
         if collide(joro,dragonup):
-            joro.state = -1
-            joro.jumpstate = 0
-            dragonsup.remove(dragonup)
+            if(joro.state !=2):
+                joro.state = -1
+                joro.jumpstate = 0
+                hp -= 1
+                dragonsup.remove(dragonup)
+            if(joro.state ==2):
+                dragonsup.remove(dragonup)
     for dragondown in dragonsdown:
         if collide(rupy, dragondown):
-            rupy.state = -1
-            rupy.jumpstate = 0
-            dragonsdown.remove(dragondown)
+            if(rupy.state != 2):
+                rupy.state = -1
+                rupy.jumpstate = 0
+                hp -= 1
+                dragonsdown.remove(dragondown)
+            if(rupy.state == 2):
+                dragonsdown.remove(dragondown)
 
 
-    if(grass.x > 1700):
-        grass.x = 0
-    if(background.x > 200):
-        background.x = 50
 
     #Dragon 장애물
 
@@ -674,7 +311,6 @@ def draw():
     if(rupy.state == -1):
         if(rupy.crushstate > 0.5):
             rupy.state = 0
-            hp -=1
             rupy.crushstate = 0
         else:
             rupy.crushstate += 0.1
@@ -699,7 +335,6 @@ def draw():
     if (joro.state == -1):
         if (joro.crushstate > 0.5):
             joro.state = 0
-            hp -= 1
             joro.crushstate = 0
 
         else:
@@ -769,7 +404,10 @@ def draw():
         obstacleup.draw_bb()
     for obstacledown in obstaclesdown:
         obstacledown.draw_bb()
-
+    for dragondown in dragonsdown:
+        dragondown.draw_bb()
+    for dragonup in dragonsup:
+        dragonup.draw_bb()
     #충돌체크 박스 그리기 끝
 
     update_canvas()
