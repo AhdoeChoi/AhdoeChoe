@@ -253,10 +253,12 @@ def update():
         if collide(joro, energyup):
             energysup.remove(energyup)
             hp +=1
+            joro.eat_hp()
     for energydown in energysdown:
         if collide(rupy, energydown):
             energysdown.remove(energydown)
             hp += 1
+            rupy.eat_hp()
 
     for dragonup in dragonsup:
         if collide(joro,dragonup):

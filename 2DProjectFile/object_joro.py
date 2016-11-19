@@ -23,6 +23,9 @@ class Joro:
         self.attackstate = 0
         self.crushstate = 0
 
+        self.eat_hp_sound = load_wav('bgm\\eat_hp.wav')
+        self.eat_hp_sound.set_volume(50)
+
     def update(self,frame_time):
         distance = Joro.RUN_SPEED_PPS * frame_time
         if (self.state == 0):
@@ -70,3 +73,6 @@ class Joro:
     def draw_bb_attack(self):
         if (self.state == 2):
             draw_rectangle(*self.get_bb_attack())
+
+    def eat_hp(self):
+        self.eat_hp_sound.play()

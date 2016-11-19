@@ -27,6 +27,10 @@ class Rupy:
         self.attackstate = 0
         self.crushstate = 0
 
+        self.eat_hp_sound = load_wav('bgm\\eat_hp.wav')
+        self.eat_hp_sound.set_volume(50)
+
+
     def update(self,frame_time):
        self.life_time += frame_time
        distance = Rupy.RUN_SPEED_PPS * frame_time
@@ -74,3 +78,6 @@ class Rupy:
     def draw_bb_attack(self):
         if(self.state == 2):
             draw_rectangle(*self.get_bb_attack())
+
+    def eat_hp(self):
+        self.eat_hp_sound.play()

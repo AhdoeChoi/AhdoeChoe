@@ -11,6 +11,9 @@ class Grass:
     def __init__(self):
         self.x = 0
         self.image = load_image('image\\grass.jpg')
+        self.bgm = load_music('bgm\\PlayMusick.mp3')
+        self.bgm.set_volume(34)
+        self.bgm.repeat_play()
     def draw(self):
         self.image.draw(1400-self.x,30)
         self.image.draw(1400-self.x,330)
