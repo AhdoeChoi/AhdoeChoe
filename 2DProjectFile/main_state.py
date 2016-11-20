@@ -159,17 +159,20 @@ def handle_events():
             #루피 부분
             elif event.type == SDL_KEYDOWN and event.key == SDLK_UP:
                 rupy.state = 1
+                rupy.jump_sound()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_RIGHT:
-                if rupy.state != 1:
+                    rupy.attack_sound()
                     rupy.state = 2 # 2는 공격
+
             #여기 까지
 
             #조로 부분
             elif event.type == SDL_KEYDOWN and event.key == SDLK_w:
                 joro.state = 1 #1은 점프
+                joro.jump_sound()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_d:
-                if joro.state != 1:
-                    joro.state = 2  # 2는 공격
+                joro.attack_sound()
+                joro.state = 2  # 2는 공격
             #여기 까지
                 #pass
 
@@ -223,19 +226,20 @@ def update():
              #print("collision")
             coinsup.remove(coinup)
             coin +=1
-
+            joro.eat_coin()
     for coindown in coinsdown:
         if collide(rupy, coindown):
              # print("collision")
             coinsdown.remove(coindown)
             coin += 1
-
+            rupy.eat_coin()
     for obstacleup in obstaclesup:
         if collide(joro, obstacleup):
             # print("collision")
             obstaclesup.remove(obstacleup)
             joro.state = -1
             hp -= 1
+            joro.eat_obstacle()
             joro.jumpstate = 0
 
 
@@ -243,8 +247,10 @@ def update():
         if collide(rupy, obstacledown):
             # print("collision")
             obstaclesdown.remove(obstacledown)
+
             rupy.state = -1
             hp -= 1
+            rupy.eat_obstacle()
             rupy.jumpstate = 0
 
 
@@ -266,6 +272,7 @@ def update():
                 joro.state = -1
                 joro.jumpstate = 0
                 hp -= 1
+                joro.eat_obstacle()
                 dragonsup.remove(dragonup)
             if(joro.state ==2):
                 dragonsup.remove(dragonup)
@@ -275,10 +282,10 @@ def update():
                 rupy.state = -1
                 rupy.jumpstate = 0
                 hp -= 1
+                rupy.eat_obstacle()
                 dragonsdown.remove(dragondown)
             if(rupy.state == 2):
                 dragonsdown.remove(dragondown)
-
 
 
     #Dragon 장애물

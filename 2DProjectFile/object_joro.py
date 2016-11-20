@@ -26,6 +26,18 @@ class Joro:
         self.eat_hp_sound = load_wav('bgm\\eat_hp.wav')
         self.eat_hp_sound.set_volume(50)
 
+        self.eat_coin_sound = load_wav('bgm\\eat_coin.wav')
+        self.eat_coin_sound.set_volume(50)
+
+        self.eat_obstacle_sound = load_wav('bgm\\crush.wav')
+        self.eat_obstacle_sound.set_volume(50)
+
+
+        self.atk_sound = load_wav('bgm\\attack.wav')
+        self.atk_sound.set_volume(50)
+
+        self.jmp_sound = load_wav('bgm\\jump.wav')
+        self.jmp_sound.set_volume(50)
     def update(self,frame_time):
         distance = Joro.RUN_SPEED_PPS * frame_time
         if (self.state == 0):
@@ -76,3 +88,14 @@ class Joro:
 
     def eat_hp(self):
         self.eat_hp_sound.play()
+
+    def eat_coin(self):
+        self.eat_coin_sound.play()
+
+    def eat_obstacle(self):
+        self.eat_obstacle_sound.play()
+
+    def attack_sound(self):
+        self.atk_sound.play()
+    def jump_sound(self):
+        self.jmp_sound.play()

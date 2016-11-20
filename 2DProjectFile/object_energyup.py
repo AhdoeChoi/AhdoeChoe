@@ -10,7 +10,7 @@ class EnergyUp:
     image = None
     def __init__(self):
         self.x = 500*random.randint(1,30)
-        self.y = 430
+        self.y = 460
         if EnergyUp.image == None:
             EnergyUp.image  = load_image('image\\energy.png')
     def update(self,frame_time):
