@@ -94,8 +94,8 @@ def enter():
     background = BackGround()
     grass = Grass()
     hpbar = HPBar()
-    coinsdown = [CoinDown() for i in range(70)]
-    coinsup = [CoinUp() for i in range(70)]
+    coinsdown = [CoinDown() for i in range(50)]
+    coinsup = [CoinUp() for i in range(50)]
     obstaclesdown = [ObstacleDown() for i in range(50)]
     obstaclesup = [ObstacleUp() for i in range(50)]
     energysup = [EnergyUp() for i in range(3)]
@@ -161,6 +161,7 @@ def handle_events():
                 rupy.state = 1
                 rupy.jump_sound()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_RIGHT:
+                if(rupy.state != 1):
                     rupy.attack_sound()
                     rupy.state = 2 # 2는 공격
 
@@ -171,8 +172,9 @@ def handle_events():
                 joro.state = 1 #1은 점프
                 joro.jump_sound()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_d:
-                joro.attack_sound()
-                joro.state = 2  # 2는 공격
+                if(joro.state !=1):
+                    joro.attack_sound()
+                    joro.state = 2  # 2는 공격
             #여기 까지
                 #pass
 
