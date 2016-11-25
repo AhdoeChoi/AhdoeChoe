@@ -10,6 +10,7 @@ class Joro:
 
     def __init__(self):
         self.hp = 10
+        self.skilgage = 0
         self.x = 80
         self.y = 430
         self.frame = 0

@@ -18,6 +18,8 @@ from object_obstacledown import ObstacleDown
 from object_obstacleup import ObstacleUp
 from object_grass import Grass
 from object_background import BackGround
+from object_skillup import SkillUp
+
 
 import game_framework
 import title_state
@@ -87,7 +89,8 @@ def get_frame_time():
 
 
 def enter():
-    global rupy, joro,background,grass,coinsdown,coinsup,obstaclesdown,obstaclesup,energysup,energysdown,dragonsup,dragonsdown,hpbar
+    global rupy, joro,background,grass,coinsdown,coinsup,obstaclesdown,obstaclesup,energysup,energysdown,dragonsup,dragonsdown,hpbar,skilsup
+
     global font
     rupy = Rupy()
     joro = Joro()
@@ -102,6 +105,7 @@ def enter():
     energysdown = [EnergyDown() for i in range(3)]
     dragonsup = [DragonUp() for i in range(20)]
     dragonsdown = [DragonDown() for i in range(20)]
+    skilsup = [SkillUp() for i in range(20)]
     font = load_font('ENCR10B.TTF')
     #pass
 
@@ -195,7 +199,7 @@ def update():
     global hp
     global coin
     frame_time = get_frame_time()
-    print(hpbar.hpstate)
+
 
     if(hp < 1):
         game_framework.change_state(ranking_state)
@@ -220,7 +224,8 @@ def update():
         dragonup.update(frame_time)
     for dragondown in dragonsdown:
         dragondown.update(frame_time)
-
+    for skilup in skilsup:
+        skilup.update(frame_time)
 
 
     for coinup in coinsup:
@@ -289,6 +294,13 @@ def update():
             if(rupy.state == 2):
                 dragonsdown.remove(dragondown)
 
+    #스킬게이지 충돌
+    for skilup in skilsup:
+        if collide(joro, skilup):
+             # print("collision")
+             skilsup.remove(skilup)
+             joro.skilgage += 1
+             print(joro.skilgage)
 
     #Dragon 장애물
 
@@ -378,6 +390,11 @@ def draw():
 
     for dragondown in dragonsdown:
         dragondown.draw()
+
+    #스킬up 클래스 그리기
+    for skilup in skilsup:
+        skilup.draw()
+
 
     #체력바 클래스 그리기
     if(hpbar.hpstate > 8):
