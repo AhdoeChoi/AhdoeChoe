@@ -11,7 +11,7 @@ class  EnergyDown:
     image = None
     def __init__(self):
         self.x = 500*random.randint(1,30)
-        self.y = 160
+        self.y = 180
         if EnergyDown.image == None:
             EnergyDown.image   = load_image('image\\energy.png')
 

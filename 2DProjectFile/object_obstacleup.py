@@ -9,7 +9,7 @@ class ObstacleUp:
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
     image = None
     def __init__(self):
-        self.x = 250 * random.randint(10,100)
+        self.x = 300 * random.randint(10,100)
         self.y = 380
         if ObstacleUp.image == None:
             ObstacleUp.image   = load_image('image\\obstacle.png')

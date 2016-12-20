@@ -18,11 +18,12 @@ class Joro:
         self.jumpimage = load_image('image\\joro_jump.png')
         self.attackimage = load_image('image\\joro_attack.png')
         self.crushimage = load_image('image\\joro_crush.png')
-
+        self.skillimage = load_image('image\\joro_crush.png')
         self.state = 0 # 0은 달리기 1은 점프
         self.jumpstate = 0
         self.attackstate = 0
         self.crushstate = 0
+        self.skillstate = 0
 
         self.eat_hp_sound = load_wav('bgm\\eat_hp.wav')
         self.eat_hp_sound.set_volume(50)
@@ -60,6 +61,8 @@ class Joro:
                 self.state = 0
         elif (self.state == 2):
             self.frame = (self.frame + 1) % 6
+        elif (self.state == 3):  # 스킬
+            self.frame = (self.frame + 1) % 6
         elif (self.state == -1):
             self.frame = (self.frame + 1) % 4
 
@@ -71,14 +74,19 @@ class Joro:
         self.attackimage.clip_draw(self.frame * 188, 0, 180, 200, self.x+10, self.y+15)
     def drawcrush(self):
        self.crushimage.clip_draw(self.frame*172,0,172,140,self.x,self.y)
-
+    def drawskill(self):
+        self.skillimage.clip_draw(self.frame*172,0,172,140,self.x,self.y)
 
     def get_bb(self):
         return self.x - 10, self.y - 40, self.x + 30, self.y + 50
 
     def get_bb_attack(self):
-        if (self.state == 2):
-            return self.x - 10, self.y - 20, self.x + 80, self.y + 50
+        if(self.state == 2):
+            return self.x-10,self.y-20, self.x+80,self.y+50
+    def get_bb_skill(self):
+        if(self.state == 3):
+            return self.x-10,self.y-100, self.x+450,self.y+200
+
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
@@ -86,6 +94,11 @@ class Joro:
     def draw_bb_attack(self):
         if (self.state == 2):
             draw_rectangle(*self.get_bb_attack())
+
+    def draw_bb_skill(self):
+        if (self.state == 3):
+            draw_rectangle(*self.get_bb_skill())
+
 
     def eat_hp(self):
         self.eat_hp_sound.play()

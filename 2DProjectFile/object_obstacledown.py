@@ -9,7 +9,7 @@ class ObstacleDown:
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
     image = None
     def __init__(self):
-        self.x = 280 *random.randint(10,100)
+        self.x = 300 *random.randint(10,100)
         self.y = 80
         if ObstacleDown.image == None:
             ObstacleDown.image   = load_image('image\\obstacle.png')

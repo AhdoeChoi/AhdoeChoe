@@ -19,7 +19,7 @@ from object_obstacleup import ObstacleUp
 from object_grass import Grass
 from object_background import BackGround
 from object_skillup import SkillUp
-
+from object_skilldown import SkillDown
 
 import game_framework
 import title_state
@@ -89,7 +89,7 @@ def get_frame_time():
 
 
 def enter():
-    global rupy, joro,background,grass,coinsdown,coinsup,obstaclesdown,obstaclesup,energysup,energysdown,dragonsup,dragonsdown,hpbar,skilsup
+    global rupy, joro,background,grass,coinsdown,coinsup,obstaclesdown,obstaclesup,energysup,energysdown,dragonsup,dragonsdown,hpbar,skilsup,skilsdown
 
     global font
     rupy = Rupy()
@@ -97,15 +97,16 @@ def enter():
     background = BackGround()
     grass = Grass()
     hpbar = HPBar()
-    coinsdown = [CoinDown() for i in range(50)]
-    coinsup = [CoinUp() for i in range(50)]
+    coinsdown = [CoinDown() for i in range(100)]
+    coinsup = [CoinUp() for i in range(100)]
     obstaclesdown = [ObstacleDown() for i in range(50)]
     obstaclesup = [ObstacleUp() for i in range(50)]
     energysup = [EnergyUp() for i in range(3)]
     energysdown = [EnergyDown() for i in range(3)]
-    dragonsup = [DragonUp() for i in range(20)]
-    dragonsdown = [DragonDown() for i in range(20)]
+    dragonsup = [DragonUp() for i in range(50)]
+    dragonsdown = [DragonDown() for i in range(50)]
     skilsup = [SkillUp() for i in range(20)]
+    skilsdown = [SkillDown() for i in range(20)]
     font = load_font('ENCR10B.TTF')
     #pass
 
@@ -165,10 +166,13 @@ def handle_events():
                 rupy.state = 1
                 rupy.jump_sound()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_RIGHT:
-                if(rupy.state != 1):
+                #if(rupy.state != 1):
                     rupy.attack_sound()
                     rupy.state = 2 # 2는 공격
-
+            elif event.type == SDL_KEYDOWN and event.key == SDLK_LEFT:
+                # if(rupy.state != 1):
+                rupy.attack_sound()
+                rupy.state = 3  # 3는 스킬
             #여기 까지
 
             #조로 부분
@@ -176,13 +180,18 @@ def handle_events():
                 joro.state = 1 #1은 점프
                 joro.jump_sound()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_d:
-                if(joro.state !=1):
+                #if(joro.state !=1):
                     joro.attack_sound()
                     joro.state = 2  # 2는 공격
+            elif event.type == SDL_KEYDOWN and event.key == SDLK_a:
+                # if(rupy.state != 1):
+                joro.attack_sound()
+                joro.state = 3  # 3는 스킬
             #여기 까지
                 #pass
 
 def collide(a,b):
+
     left_a, bottom_a, right_a, top_a = a.get_bb()
     left_b, bottom_b, right_b, top_b = b.get_bb()
 
@@ -194,7 +203,30 @@ def collide(a,b):
 
     return True
 
+def collide_attack(a,b):
 
+    left_a, bottom_a, right_a, top_a = a.get_bb_attack()
+    left_b, bottom_b, right_b, top_b = b.get_bb()
+
+
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+
+    return True
+def collide_skill(a,b):
+
+    left_a, bottom_a, right_a, top_a = a.get_bb_skill()
+    left_b, bottom_b, right_b, top_b = b.get_bb()
+
+
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+
+    return True
 def update():
     global hp
     global coin
@@ -226,7 +258,8 @@ def update():
         dragondown.update(frame_time)
     for skilup in skilsup:
         skilup.update(frame_time)
-
+    for skildown in skilsdown:
+        skildown.update(frame_time)
 
     for coinup in coinsup:
         if collide(joro, coinup):
@@ -241,25 +274,44 @@ def update():
             coin += 1
             rupy.eat_coin()
     for obstacleup in obstaclesup:
-        if collide(joro, obstacleup):
-            # print("collision")
-            obstaclesup.remove(obstacleup)
-            joro.state = -1
-            hp -= 1
-            joro.eat_obstacle()
-            joro.jumpstate = 0
-
+        if (joro.state == 0 or 1):
+            if collide(joro, obstacleup):
+                if (joro.state != 2):
+                    joro.state = -1
+                    joro.jumpstate = 0
+                    hp -= 1
+                    joro.eat_obstacle()
+                    obstaclesup.remove(obstacleup)
+        if (joro.state == 2):
+            if collide_attack(joro, obstacleup):
+                joro.jumpstate = 0
+                joro.eat_obstacle()
+                obstaclesup.remove(obstacleup)
+        if (joro.state == 3):
+            if collide_skill(joro, obstacleup):
+                joro.jumpstate = 0
+                joro.eat_obstacle()
+                obstaclesup.remove(obstacleup)
 
     for obstacledown in obstaclesdown:
-        if collide(rupy, obstacledown):
-            # print("collision")
-            obstaclesdown.remove(obstacledown)
-
-            rupy.state = -1
-            hp -= 1
-            rupy.eat_obstacle()
-            rupy.jumpstate = 0
-
+        if (rupy.state == 0 or 1):
+            if collide(rupy, obstacledown):
+                if (rupy.state != 2):
+                    rupy.state = -1
+                    rupy.jumpstate = 0
+                    hp -= 1
+                    rupy.eat_obstacle()
+                    obstaclesdown.remove(obstacledown)
+        if (rupy.state == 2):
+            if collide_attack(rupy, obstacledown):
+                rupy.jumpstate = 0
+                rupy.eat_obstacle()
+                obstaclesdown.remove(obstacledown)
+        if (rupy.state == 3):
+            if collide_skill(rupy, obstacledown):
+                rupy.jumpstate = 0
+                rupy.eat_obstacle()
+                obstaclesdown.remove(obstacledown)
 
 
     for energyup in energysup:
@@ -274,24 +326,43 @@ def update():
             rupy.eat_hp()
 
     for dragonup in dragonsup:
-        if collide(joro,dragonup):
-            if(joro.state !=2):
-                joro.state = -1
+        if (joro.state == 0 or 1):
+            if collide(joro, dragonup):
+                if (joro.state != 2):
+                    joro.state = -1
+                    joro.jumpstate = 0
+                    hp -= 1
+                    joro.eat_obstacle()
+                    dragonsup.remove(dragonup)
+        if (joro.state == 2):
+            if collide_attack(joro, dragonup):
                 joro.jumpstate = 0
-                hp -= 1
                 joro.eat_obstacle()
                 dragonsup.remove(dragonup)
-            if(joro.state ==2):
+        if (joro.state == 3):
+            if collide_skill(joro, dragonup):
+                joro.jumpstate = 0
+                joro.eat_obstacle()
                 dragonsup.remove(dragonup)
+
     for dragondown in dragonsdown:
-        if collide(rupy, dragondown):
-            if(rupy.state != 2):
-                rupy.state = -1
+        if(rupy.state == 0 or 1):
+            if collide(rupy, dragondown):
+                if(rupy.state != 2):
+                    rupy.state = -1
+                    rupy.jumpstate = 0
+                    hp -= 1
+                    rupy.eat_obstacle()
+                    dragonsdown.remove(dragondown)
+        if(rupy.state == 2):
+            if collide_attack(rupy, dragondown):
+                    rupy.jumpstate = 0
+                    rupy.eat_obstacle()
+                    dragonsdown.remove(dragondown)
+        if (rupy.state == 3):
+            if collide_skill(rupy, dragondown):
                 rupy.jumpstate = 0
-                hp -= 1
                 rupy.eat_obstacle()
-                dragonsdown.remove(dragondown)
-            if(rupy.state == 2):
                 dragonsdown.remove(dragondown)
 
     #스킬게이지 충돌
@@ -301,7 +372,15 @@ def update():
              skilsup.remove(skilup)
              joro.skilgage += 1
              print(joro.skilgage)
-
+             print("Joro")
+    # 스킬게이지 충돌
+    for skildown in skilsdown:
+        if collide(rupy, skildown):
+            # print("collision")
+            skilsdown.remove(skildown)
+            rupy.skilgage += 1
+            print(rupy.skilgage)
+            print("Rupy")
     #Dragon 장애물
 
     #pass
@@ -331,6 +410,14 @@ def draw():
             rupy.attackstate += 0.1
         rupy.drawattack()
 
+    if (rupy.state == 3):
+        if (rupy.skillstate > 1):
+            rupy.state = 0
+            rupy.skillstate  = 0
+        else:
+            rupy.skillstate  += 0.1
+        rupy.drawskill()
+
     if(rupy.state == -1):
         if(rupy.crushstate > 0.5):
             rupy.state = 0
@@ -354,6 +441,13 @@ def draw():
         else:
             joro.attackstate += 0.1
         joro.drawattack()
+    if (joro.state == 3):
+        if (joro.skillstate > 1):
+            joro.state = 0
+            joro.skillstate = 0
+        else:
+            joro.skillstate += 0.1
+        joro.drawskill()
 
     if (joro.state == -1):
         if (joro.crushstate > 0.5):
@@ -394,7 +488,9 @@ def draw():
     #스킬up 클래스 그리기
     for skilup in skilsup:
         skilup.draw()
-
+    #스킬down 클래스 그리기
+    for skildown in skilsdown:
+        skildown.draw()
 
     #체력바 클래스 그리기
     if(hpbar.hpstate > 8):
@@ -420,10 +516,11 @@ def draw():
 
     rupy.draw_bb()
     rupy.draw_bb_attack()
+    rupy.draw_bb_skill()
 
     joro.draw_bb()
     joro.draw_bb_attack()
-
+    joro.draw_bb_skill()
     for coinup in coinsup:
         coinup.draw_bb()
     for coindown in coinsdown:
