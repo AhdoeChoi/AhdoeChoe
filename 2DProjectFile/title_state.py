@@ -5,11 +5,20 @@ from pico2d import *
 
 name = "TitleState"
 image = None
+class TitleMusick:
+    def __init__(self):
+        self.x = 0
+        self.image = load_image('image\\grass.jpg')
+        self.bgm = load_music('bgm\\TitleMusick.mp3')
+        self.bgm.set_volume(34)
+        self.bgm.repeat_play()
 
 
 def enter():
-    global image
+    global image,titlemusick
     image = load_image('image\\title.jpg')
+    titlemusick = TitleMusick()
+
     #pass
 
 

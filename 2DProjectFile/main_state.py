@@ -24,9 +24,9 @@ from object_skilldown import SkillDown
 import game_framework
 import title_state
 import ranking_state
-hp = 8
+hp = 4
 coin = 0
-
+skillcnt = 3
 name = "MainState"
 
 rupy = None
@@ -42,10 +42,6 @@ class HPBar:
         self.x = 400
         self.y = 570
         self.hpstate = hp
-        self.hp8 = load_image('image\\hp8.png')
-        self.hp7 = load_image('image\\hp7.png')
-        self.hp6 = load_image('image\\hp6.png')
-        self.hp5 = load_image('image\\hp5.png')
         self.hp4 = load_image('image\\hp4.png')
         self.hp3 = load_image('image\\hp3.png')
         self.hp2 = load_image('image\\hp2.png')
@@ -54,14 +50,6 @@ class HPBar:
     def update(self,frame_time):
         self.hpstate = hp
 
-    def drawhp8(self):
-        self.hp8.draw(self.x,self.y)
-    def drawhp7(self):
-        self.hp7.draw(self.x, self.y)
-    def drawhp6(self):
-        self.hp6.draw(self.x, self.y)
-    def drawhp5(self):
-        self.hp5.draw(self.x, self.y)
     def drawhp4(self):
         self.hp4.draw(self.x, self.y)
     def drawhp3(self):
@@ -71,10 +59,38 @@ class HPBar:
     def drawhp1(self):
         self.hp1.draw(self.x, self.y)
 
+class SkillBar:
+    global skillcnt
+    image = None
+
+    def __init__(self):
+        self.x = 400
+        self.y = 540
+        self.skillstate = skillcnt
+        self.skill0 = load_image('image\\skill_0.png')
+        self.skill1 = load_image('image\\skill_1.png')
+        self.skill2 = load_image('image\\skill_2.png')
+        self.skill3 = load_image('image\\skill_3.png')
 
 
+    def update(self, frame_time):
+        self.skillstate = skillcnt
 
- #Charecter 객체
+
+    def drawskill3(self):
+        self.skill3.draw(self.x, self.y)
+
+    def drawskill2(self):
+        self.skill2.draw(self.x, self.y)
+
+    def drawskill1(self):
+        self.skill1.draw(self.x, self.y)
+
+    def drawskill0(self):
+        self.skill0.draw(self.x, self.y)
+
+
+                #Charecter 객체
 
 
 current_time = 0.0
@@ -89,7 +105,7 @@ def get_frame_time():
 
 
 def enter():
-    global rupy, joro,background,grass,coinsdown,coinsup,obstaclesdown,obstaclesup,energysup,energysdown,dragonsup,dragonsdown,hpbar,skilsup,skilsdown
+    global rupy, joro,background,grass,coinsdown,coinsup,obstaclesdown,obstaclesup,energysup,energysdown,dragonsup,dragonsdown,hpbar,skilsup,skilsdown,skillbar
 
     global font
     rupy = Rupy()
@@ -97,6 +113,7 @@ def enter():
     background = BackGround()
     grass = Grass()
     hpbar = HPBar()
+    skillbar = SkillBar()
     coinsdown = [CoinDown() for i in range(100)]
     coinsup = [CoinUp() for i in range(100)]
     obstaclesdown = [ObstacleDown() for i in range(50)]
@@ -105,8 +122,8 @@ def enter():
     energysdown = [EnergyDown() for i in range(3)]
     dragonsup = [DragonUp() for i in range(50)]
     dragonsdown = [DragonDown() for i in range(50)]
-    skilsup = [SkillUp() for i in range(20)]
-    skilsdown = [SkillDown() for i in range(20)]
+    skilsup = [SkillUp() for i in range(2)]
+    skilsdown = [SkillDown() for i in range(2)]
     font = load_font('ENCR10B.TTF')
     #pass
 
@@ -151,6 +168,7 @@ def resume():
     pass
 
 def handle_events():
+    global skillcnt
     events = get_events()
     for event in events:
 
@@ -166,13 +184,16 @@ def handle_events():
                 rupy.state = 1
                 rupy.jump_sound()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_RIGHT:
-                #if(rupy.state != 1):
+                if(rupy.state != 1):
                     rupy.attack_sound()
                     rupy.state = 2 # 2는 공격
             elif event.type == SDL_KEYDOWN and event.key == SDLK_LEFT:
                 # if(rupy.state != 1):
-                rupy.attack_sound()
-                rupy.state = 3  # 3는 스킬
+                if (rupy.state != 1):
+                    if(skillcnt>0):
+                        rupy.attack_sound()
+                        rupy.state = 3  # 3는 스킬
+                        skillcnt -= 1
             #여기 까지
 
             #조로 부분
@@ -180,13 +201,18 @@ def handle_events():
                 joro.state = 1 #1은 점프
                 joro.jump_sound()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_d:
-                #if(joro.state !=1):
+                if(joro.state !=1):
                     joro.attack_sound()
                     joro.state = 2  # 2는 공격
             elif event.type == SDL_KEYDOWN and event.key == SDLK_a:
                 # if(rupy.state != 1):
-                joro.attack_sound()
-                joro.state = 3  # 3는 스킬
+                if (rupy.state != 1):
+                    if (skillcnt > 0):
+                        #joro.skill_sound()
+                        joro.state = 3  # 3는 스킬
+                        skillcnt-=1
+
+
             #여기 까지
                 #pass
 
@@ -230,6 +256,7 @@ def collide_skill(a,b):
 def update():
     global hp
     global coin
+    global skillcnt
     frame_time = get_frame_time()
 
 
@@ -240,6 +267,7 @@ def update():
     background.update(frame_time)
     grass.update(frame_time)
     hpbar.update(frame_time)
+    skillbar.update(frame_time)
     for coindown in coinsdown:
         coindown.update(frame_time)
     for coinup in coinsup:
@@ -274,19 +302,18 @@ def update():
             coin += 1
             rupy.eat_coin()
     for obstacleup in obstaclesup:
-        if (joro.state == 0 or 1):
-            if collide(joro, obstacleup):
-                if (joro.state != 2):
-                    joro.state = -1
-                    joro.jumpstate = 0
-                    hp -= 1
-                    joro.eat_obstacle()
-                    obstaclesup.remove(obstacleup)
-        if (joro.state == 2):
-            if collide_attack(joro, obstacleup):
+        if collide(joro, obstacleup):
+            if (joro.state != 3):
+                joro.state = -1
                 joro.jumpstate = 0
+                hp -= 1
                 joro.eat_obstacle()
                 obstaclesup.remove(obstacleup)
+        #if (joro.state == 2):
+            #if collide_attack(joro, obstacleup):
+                #joro.jumpstate = 0
+                #joro.eat_obstacle()
+                #obstaclesup.remove(obstacleup)
         if (joro.state == 3):
             if collide_skill(joro, obstacleup):
                 joro.jumpstate = 0
@@ -294,14 +321,13 @@ def update():
                 obstaclesup.remove(obstacleup)
 
     for obstacledown in obstaclesdown:
-        if (rupy.state == 0 or 1):
-            if collide(rupy, obstacledown):
-                if (rupy.state != 2):
-                    rupy.state = -1
-                    rupy.jumpstate = 0
-                    hp -= 1
-                    rupy.eat_obstacle()
-                    obstaclesdown.remove(obstacledown)
+        if collide(rupy, obstacledown):
+            if (rupy.state != 3):
+                rupy.state = -1
+                rupy.jumpstate = 0
+                hp -= 1
+                rupy.eat_obstacle()
+                obstaclesdown.remove(obstacledown)
         if (rupy.state == 2):
             if collide_attack(rupy, obstacledown):
                 rupy.jumpstate = 0
@@ -370,16 +396,18 @@ def update():
         if collide(joro, skilup):
              # print("collision")
              skilsup.remove(skilup)
-             joro.skilgage += 1
-             print(joro.skilgage)
+             skillcnt += 1
+             #joro.skilgage += 1
+             print(skillcnt)
              print("Joro")
     # 스킬게이지 충돌
     for skildown in skilsdown:
         if collide(rupy, skildown):
             # print("collision")
             skilsdown.remove(skildown)
-            rupy.skilgage += 1
-            print(rupy.skilgage)
+            skillcnt += 1
+            #rupy.skilgage += 1
+            print(skillcnt)
             print("Rupy")
     #Dragon 장애물
 
@@ -493,16 +521,8 @@ def draw():
         skildown.draw()
 
     #체력바 클래스 그리기
-    if(hpbar.hpstate > 8):
-        hpbar.drawhp8()
-    if(hpbar.hpstate == 8):
-        hpbar.drawhp8()
-    if (hpbar.hpstate == 7):
-         hpbar.drawhp7()
-    if (hpbar.hpstate == 6):
-        hpbar.drawhp6()
-    if (hpbar.hpstate == 5):
-        hpbar.drawhp5()
+    if(hpbar.hpstate > 4):
+        hpbar.drawhp4()
     if (hpbar.hpstate == 4):
         hpbar.drawhp4()
     if (hpbar.hpstate == 3):
@@ -512,6 +532,17 @@ def draw():
     if (hpbar.hpstate == 1):
         hpbar.drawhp1()
 
+    #스킬바 클래스 그리기
+    if (skillbar.skillstate > 3):
+        skillbar.drawskill3()
+    if (skillbar.skillstate == 3):
+        skillbar.drawskill3()
+    if (skillbar.skillstate == 2):
+        skillbar.drawskill2()
+    if (skillbar.skillstate == 1):
+        skillbar.drawskill1()
+    if (skillbar.skillstate == 0):
+        skillbar.drawskill0()
      #충돌체크 박스 그리기
 
     rupy.draw_bb()

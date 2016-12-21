@@ -11,9 +11,9 @@ class SkillDown:
     image = None
     def __init__(self):
         self.x = 50*random.randint(1,400)
-        self.y = 50*math.cos(3*self.x) + 160
+        self.y = 180
         if SkillDown.image == None:
-            SkillDown.image   = load_image('image\\coin.png')
+            SkillDown.image   = load_image('image\\skill.png')
             pass
     def update(self,frame_time):
         distance = SkillDown.RUN_SPEED_PPS * frame_time
