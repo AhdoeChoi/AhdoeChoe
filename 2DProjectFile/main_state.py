@@ -545,25 +545,25 @@ def draw():
         skillbar.drawskill0()
      #충돌체크 박스 그리기
 
-    rupy.draw_bb()
-    rupy.draw_bb_attack()
-    rupy.draw_bb_skill()
+    #rupy.draw_bb()
+    #rupy.draw_bb_attack()
+    #rupy.draw_bb_skill()
 
-    joro.draw_bb()
-    joro.draw_bb_attack()
-    joro.draw_bb_skill()
-    for coinup in coinsup:
-        coinup.draw_bb()
-    for coindown in coinsdown:
-        coindown.draw_bb()
-    for obstacleup in obstaclesup:
-        obstacleup.draw_bb()
-    for obstacledown in obstaclesdown:
-        obstacledown.draw_bb()
-    for dragondown in dragonsdown:
-        dragondown.draw_bb()
-    for dragonup in dragonsup:
-        dragonup.draw_bb()
+    #joro.draw_bb()
+    #joro.draw_bb_attack()
+    #joro.draw_bb_skill()
+    #for coinup in coinsup:
+        #coinup.draw_bb()
+    #for coindown in coinsdown:
+        #coindown.draw_bb()
+    #for obstacleup in obstaclesup:
+        #obstacleup.draw_bb()
+    #for obstacledown in obstaclesdown:
+        #obstacledown.draw_bb()
+    #for dragondown in dragonsdown:
+        #dragondown.draw_bb()
+    #for dragonup in dragonsup:
+        #dragonup.draw_bb()
     #충돌체크 박스 그리기 끝
 
     update_canvas()

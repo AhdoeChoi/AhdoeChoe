@@ -11,7 +11,7 @@ class CoinDown:
     image = None
     def __init__(self):
         self.x = 50*random.randint(1,400)
-        self.y = 50*math.cos(3*self.x) + 150
+        self.y = 50*math.cos(3*self.x) + 170
         if CoinDown.image == None:
             CoinDown.image   = load_image('image\\coin.png')
 

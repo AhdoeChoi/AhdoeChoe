@@ -11,7 +11,7 @@ class DragonUp:
 
     image = None
     def __init__(self):
-        self.x = 100*random.randint(20,400)
+        self.x = 100*random.randint(30,400)
         self.y = 450
         if DragonUp.image == None:
             DragonUp.image   = load_image('image\\dragon.png')

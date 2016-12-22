@@ -11,7 +11,7 @@ class CoinUp:
     image = None
     def __init__(self):
         self.x = 50*random.randint(1,400)
-        self.y = 50*math.cos(3*self.x) + 430
+        self.y = 50*math.cos(3*self.x) + 450
         if CoinUp.image == None:
             CoinUp.image   = load_image('image\\coin.png')
     def update(self,frame_time):
